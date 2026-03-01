@@ -29,7 +29,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
   return (
     <>
       {/* Hero */}
-      <section className="relative h-[50vh] min-h-[400px] flex items-end overflow-hidden">
+      <section className="relative flex items-end overflow-hidden" style={{ height: '50vh', minHeight: '400px' }}>
         <Image
           src={city.coverImage}
           alt={city.name}

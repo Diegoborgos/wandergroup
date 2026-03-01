@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative min-h-[92vh] flex items-center overflow-hidden">
+      <section className="relative flex items-center overflow-hidden" style={{ minHeight: '92vh' }}>
         {/* Background Image */}
         <div className="absolute inset-0">
           <Image
@@ -238,34 +238,34 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-coral/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
+            <div className="flex flex-col items-center text-center">
+              <div style={{width:'64px',height:'64px',display:'flex',alignItems:'center',justifyContent:'center'}} className="bg-coral/20 rounded-2xl mb-6">
                 <Search className="w-8 h-8 text-coral" />
               </div>
               <div className="text-coral font-bold text-sm mb-2">01</div>
               <h3 className="text-xl font-bold mb-3">Browse your city</h3>
-              <p className="text-white/50">
+              <p className="text-white/50 max-w-xs">
                 Explore curated city pages with every alternative education option — schools, pods, forest schools, retreats, and communities.
               </p>
             </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-coral/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
+            <div className="flex flex-col items-center text-center">
+              <div style={{width:'64px',height:'64px',display:'flex',alignItems:'center',justifyContent:'center'}} className="bg-coral/20 rounded-2xl mb-6">
                 <Users className="w-8 h-8 text-coral" />
               </div>
               <div className="text-coral font-bold text-sm mb-2">02</div>
               <h3 className="text-xl font-bold mb-3">Find your people</h3>
-              <p className="text-white/50">
+              <p className="text-white/50 max-w-xs">
                 See which families are already there or arriving soon. Connect before you even land. Your kids will have friends from day one.
               </p>
             </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-coral/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
+            <div className="flex flex-col items-center text-center">
+              <div style={{width:'64px',height:'64px',display:'flex',alignItems:'center',justifyContent:'center'}} className="bg-coral/20 rounded-2xl mb-6">
                 <Star className="w-8 h-8 text-coral" />
               </div>
               <div className="text-coral font-bold text-sm mb-2">03</div>
               <h3 className="text-xl font-bold mb-3">Join & contribute</h3>
-              <p className="text-white/50">
+              <p className="text-white/50 max-w-xs">
                 Leave reviews, share your experience, vouch for trusted options. The community grows stronger with every family.
               </p>
             </div>

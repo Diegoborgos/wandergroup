@@ -9,7 +9,7 @@ export default function ListingCard({ listing }: { listing: Listing }) {
   return (
     <Link href={`/listing/${listing.slug}`} className="trip-card block bg-white rounded-2xl overflow-hidden shadow-sm border border-warm-gray-dark/30 group">
       {/* Image */}
-      <div className="relative h-52 overflow-hidden">
+      <div className="relative overflow-hidden" style={{ height: '210px' }}>
         <Image
           src={listing.coverImage}
           alt={listing.name}
@@ -18,20 +18,20 @@ export default function ListingCard({ listing }: { listing: Listing }) {
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
         {/* Category Badge */}
-        <div className="absolute top-3 left-3 flex items-center gap-1.5 px-3 py-1.5 bg-white/95 backdrop-blur-sm rounded-full text-xs font-semibold text-midnight">
+        <div className="absolute top-3 left-3 flex items-center gap-1.5 px-3 py-1.5 bg-white/95 backdrop-blur-sm rounded-full text-xs font-semibold text-midnight shadow-sm">
           <span>{catInfo.icon}</span>
           <span>{catInfo.label}</span>
         </div>
         {/* Verified Badge */}
         {listing.verified && (
-          <div className="absolute top-3 right-3 flex items-center gap-1 px-2 py-1 bg-sage/90 backdrop-blur-sm rounded-full text-xs font-medium text-white">
+          <div className="absolute top-3 right-3 flex items-center gap-1 px-2.5 py-1 bg-sage/90 backdrop-blur-sm rounded-full text-xs font-medium text-white">
             <CheckCircle className="w-3 h-3" />
             Verified
           </div>
         )}
         {/* Spots Available */}
         {listing.spotsAvailable !== undefined && listing.spotsAvailable <= 3 && (
-          <div className="absolute bottom-3 left-3 px-3 py-1.5 bg-coral/90 backdrop-blur-sm rounded-full text-xs font-semibold text-white">
+          <div className="absolute bottom-3 left-3 px-3 py-1.5 bg-coral text-white rounded-full text-xs font-bold shadow-sm">
             Only {listing.spotsAvailable} spots left
           </div>
         )}
@@ -41,24 +41,23 @@ export default function ListingCard({ listing }: { listing: Listing }) {
       <div className="p-5">
         {/* Title & Rating */}
         <div className="flex items-start justify-between gap-2 mb-2">
-          <h3 className="font-bold text-midnight text-base leading-snug group-hover:text-coral transition-colors">
+          <h3 className="font-bold text-midnight text-[15px] leading-snug group-hover:text-coral transition-colors line-clamp-2">
             {listing.name}
           </h3>
-          <div className="flex items-center gap-1 shrink-0">
-            <Star className="w-4 h-4 fill-golden text-golden" />
-            <span className="text-sm font-semibold text-midnight">{listing.rating}</span>
-            <span className="text-xs text-midnight/40">({listing.reviewCount})</span>
+          <div className="flex items-center gap-1 shrink-0 bg-warm-gray px-2 py-0.5 rounded-md">
+            <Star className="w-3.5 h-3.5 fill-golden text-golden" />
+            <span className="text-sm font-bold text-midnight">{listing.rating}</span>
           </div>
         </div>
 
         {/* Location */}
-        <div className="flex items-center gap-1 text-sm text-midnight/50 mb-3">
-          <MapPin className="w-3.5 h-3.5" />
+        <div className="flex items-center gap-1 text-xs text-midnight/50 mb-3">
+          <MapPin className="w-3 h-3" />
           <span>{listing.city}, {listing.country}</span>
         </div>
 
         {/* Description */}
-        <p className="text-sm text-midnight/60 line-clamp-2 mb-4">
+        <p className="text-sm text-midnight/60 line-clamp-2 mb-4 leading-relaxed">
           {listing.shortDescription}
         </p>
 
@@ -76,7 +75,7 @@ export default function ListingCard({ listing }: { listing: Listing }) {
           <div className="flex items-center gap-3 text-xs text-midnight/50">
             <span className="flex items-center gap-1">
               <Users className="w-3.5 h-3.5" />
-              Ages {listing.ageRange.min}-{listing.ageRange.max}
+              {listing.ageRange.min}–{listing.ageRange.max}y
             </span>
             <span className="flex items-center gap-1">
               <Clock className="w-3.5 h-3.5" />

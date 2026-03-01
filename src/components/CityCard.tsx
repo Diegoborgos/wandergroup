@@ -9,7 +9,8 @@ export default function CityCard({ city, size = 'default' }: { city: City; size?
   return (
     <Link
       href={`/city/${city.slug}`}
-      className={`trip-card block relative rounded-2xl overflow-hidden group ${isLarge ? 'h-[420px]' : 'h-[320px]'}`}
+      className="trip-card block relative rounded-2xl overflow-hidden group"
+      style={{ height: isLarge ? '420px' : '320px' }}
     >
       <Image
         src={city.coverImage}
