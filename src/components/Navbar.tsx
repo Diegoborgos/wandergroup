@@ -2,60 +2,62 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Menu, X, MapPin, Heart } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
+
+const navLinks = [
+  { href: '/destinations', label: 'Destinations' },
+  { href: '/city/lisbon', label: 'Lisbon' },
+  { href: '/city/ericeira', label: 'Ericeira' },
+  { href: '/city/sintra', label: 'Sintra' },
+  { href: '/city/cascais', label: 'Cascais' },
+];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-warm-gray-dark/30">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
+    <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, backgroundColor: 'rgba(255,255,255,0.97)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #e7e5e4' }}>
+      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '72px' }}>
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-9 h-9 bg-coral rounded-xl flex items-center justify-center group-hover:bg-coral-dark transition-colors">
-              <MapPin className="w-5 h-5 text-white" />
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
+            <div style={{ width: '36px', height: '36px', backgroundColor: '#FF4438', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 800, fontSize: '18px' }}>
+              W
             </div>
-            <div className="flex flex-col">
-              <span className="text-lg font-bold text-midnight leading-tight tracking-tight">
-                wandergroup
-              </span>
-              <span className="text-[10px] text-midnight/50 leading-none tracking-wider uppercase hidden sm:block">
-                For families who refused the default
-              </span>
-            </div>
+            <span style={{ fontSize: '20px', fontWeight: 800, color: '#1B1B1F', letterSpacing: '-0.5px' }}>
+              wandergroup
+            </span>
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-8">
-            <Link href="/destinations" className="text-sm font-medium text-midnight/70 hover:text-coral transition-colors">
-              Destinations
-            </Link>
-            <Link href="/city/lisbon" className="text-sm font-medium text-midnight/70 hover:text-coral transition-colors">
-              Lisbon
-            </Link>
-            <Link href="/city/ericeira" className="text-sm font-medium text-midnight/70 hover:text-coral transition-colors">
-              Ericeira
-            </Link>
-            <Link href="/city/sintra" className="text-sm font-medium text-midnight/70 hover:text-coral transition-colors">
-              Sintra
-            </Link>
-            <Link href="/city/cascais" className="text-sm font-medium text-midnight/70 hover:text-coral transition-colors">
-              Cascais
-            </Link>
+          <div className="hidden md:flex" style={{ alignItems: 'center', gap: '32px' }}>
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                style={{ fontSize: '14px', fontWeight: 500, color: '#71717a', textDecoration: 'none', transition: 'color 0.2s' }}
+                className="hover:text-coral"
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
 
-          {/* CTA + Mobile */}
-          <div className="flex items-center gap-3">
-            <button className="hidden md:flex items-center gap-2 px-5 py-2.5 bg-coral text-white text-sm font-semibold rounded-xl hover:bg-coral-dark transition-all hover:shadow-lg hover:shadow-coral/25">
-              <Heart className="w-4 h-4" />
-              I&apos;m arriving
-            </button>
+          {/* CTA + Mobile Toggle */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <Link
+              href="#"
+              className="hidden md:flex"
+              style={{ alignItems: 'center', gap: '8px', padding: '10px 24px', backgroundColor: '#FF4438', color: 'white', fontSize: '14px', fontWeight: 600, borderRadius: '12px', textDecoration: 'none', transition: 'background-color 0.2s' }}
+            >
+              Signal your arrival
+            </Link>
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden p-2 text-midnight"
+              className="md:hidden"
+              style={{ padding: '8px', color: '#1B1B1F', background: 'none', border: 'none', cursor: 'pointer' }}
             >
-              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
@@ -63,27 +65,24 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-white border-t border-warm-gray-dark/30 animate-fade-in-up">
-          <div className="px-4 py-4 space-y-1">
-            <Link href="/destinations" onClick={() => setIsOpen(false)} className="block px-4 py-3 rounded-xl text-midnight/70 hover:bg-sand hover:text-coral font-medium transition-colors">
-              Destinations
+        <div className="md:hidden" style={{ backgroundColor: 'white', borderTop: '1px solid #e7e5e4', padding: '16px' }}>
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={() => setIsOpen(false)}
+              style={{ display: 'block', padding: '12px 16px', fontSize: '15px', fontWeight: 500, color: '#3f3f46', textDecoration: 'none', borderRadius: '10px' }}
+            >
+              {link.label}
             </Link>
-            <Link href="/city/lisbon" onClick={() => setIsOpen(false)} className="block px-4 py-3 rounded-xl text-midnight/70 hover:bg-sand hover:text-coral font-medium transition-colors">
-              Lisbon
+          ))}
+          <div style={{ marginTop: '8px', padding: '0 16px' }}>
+            <Link
+              href="#"
+              style={{ display: 'block', textAlign: 'center', padding: '12px', backgroundColor: '#FF4438', color: 'white', fontSize: '14px', fontWeight: 600, borderRadius: '12px', textDecoration: 'none' }}
+            >
+              Signal your arrival
             </Link>
-            <Link href="/city/ericeira" onClick={() => setIsOpen(false)} className="block px-4 py-3 rounded-xl text-midnight/70 hover:bg-sand hover:text-coral font-medium transition-colors">
-              Ericeira
-            </Link>
-            <Link href="/city/sintra" onClick={() => setIsOpen(false)} className="block px-4 py-3 rounded-xl text-midnight/70 hover:bg-sand hover:text-coral font-medium transition-colors">
-              Sintra
-            </Link>
-            <Link href="/city/cascais" onClick={() => setIsOpen(false)} className="block px-4 py-3 rounded-xl text-midnight/70 hover:bg-sand hover:text-coral font-medium transition-colors">
-              Cascais
-            </Link>
-            <button className="w-full mt-2 flex items-center justify-center gap-2 px-5 py-3 bg-coral text-white text-sm font-semibold rounded-xl">
-              <Heart className="w-4 h-4" />
-              I&apos;m arriving
-            </button>
           </div>
         </div>
       )}

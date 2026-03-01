@@ -27,44 +27,45 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
 
   return (
     <>
-      {/* Image Gallery — WeRoad style mosaic */}
-      <section className="bg-white pt-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-2">
-          <Link href={`/city/${listing.citySlug}`} className="inline-flex items-center gap-1.5 text-midnight/50 text-sm mb-4 hover:text-coral transition-colors">
-            <ArrowLeft className="w-4 h-4" />
+      {/* Image Gallery */}
+      <section style={{ backgroundColor: 'white', paddingTop: '72px' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '24px 24px 0' }}>
+          <Link href={`/city/${listing.citySlug}`} style={{
+            display: 'inline-flex', alignItems: 'center', gap: '6px',
+            color: '#a1a1aa', fontSize: '14px', marginBottom: '16px', textDecoration: 'none',
+          }}>
+            <ArrowLeft size={16} />
             Back to {listing.city}
           </Link>
         </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-2 rounded-2xl overflow-hidden">
-            {/* Main large image */}
-            <div className="relative md:col-span-2 aspect-[16/9]">
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px 24px' }}>
+          <div className="grid grid-cols-1 md:grid-cols-3" style={{ gap: '8px', borderRadius: '20px', overflow: 'hidden' }}>
+            <div className="md:col-span-2" style={{ position: 'relative', aspectRatio: '16/9' }}>
               <Image
                 src={listing.images[0]}
                 alt={listing.name}
                 fill
-                className="object-cover"
+                style={{ objectFit: 'cover' }}
                 priority
                 sizes="(max-width: 768px) 100vw, 66vw"
               />
             </div>
-            {/* Two stacked smaller images */}
-            <div className="hidden md:grid grid-rows-2 gap-2">
-              <div className="relative">
+            <div className="hidden md:grid" style={{ display: 'grid', gridTemplateRows: '1fr 1fr', gap: '8px' }}>
+              <div style={{ position: 'relative' }}>
                 <Image
                   src={listing.images[1] || listing.images[0]}
                   alt={`${listing.name} 2`}
                   fill
-                  className="object-cover"
+                  style={{ objectFit: 'cover' }}
                   sizes="33vw"
                 />
               </div>
-              <div className="relative">
+              <div style={{ position: 'relative' }}>
                 <Image
                   src={listing.images[2] || listing.images[0]}
                   alt={`${listing.name} 3`}
                   fill
-                  className="object-cover"
+                  style={{ objectFit: 'cover' }}
                   sizes="33vw"
                 />
               </div>
@@ -74,86 +75,107 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
       </section>
 
       {/* Content */}
-      <section className="bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex flex-col lg:flex-row gap-10">
+      <section style={{ backgroundColor: 'white' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '32px 24px 64px' }}>
+          <div className="flex flex-col lg:flex-row" style={{ gap: '48px' }}>
             {/* Main Content */}
-            <div className="flex-1 min-w-0">
-              {/* Header */}
-              <div className="flex flex-wrap items-center gap-2 mb-3">
-                <span className="px-3 py-1 bg-sand rounded-full text-xs font-semibold text-midnight">
+            <div style={{ flex: 1, minWidth: 0 }}>
+              {/* Header badges */}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '16px' }}>
+                <span style={{
+                  padding: '6px 14px', backgroundColor: '#F5F5F4', borderRadius: '20px',
+                  fontSize: '13px', fontWeight: 600, color: '#1B1B1F',
+                }}>
                   {catInfo.icon} {catInfo.label}
                 </span>
                 {listing.verified && (
-                  <span className="flex items-center gap-1 px-2.5 py-1 bg-sage/10 text-sage rounded-full text-xs font-medium">
-                    <CheckCircle className="w-3 h-3" />
+                  <span style={{
+                    display: 'flex', alignItems: 'center', gap: '4px',
+                    padding: '6px 12px', backgroundColor: '#F0FDF4', color: '#16A34A',
+                    borderRadius: '20px', fontSize: '12px', fontWeight: 600,
+                  }}>
+                    <CheckCircle size={13} />
                     Verified
                   </span>
                 )}
                 {listing.claimedByOperator && (
-                  <span className="px-2.5 py-1 bg-ocean/10 text-ocean rounded-full text-xs font-medium">
+                  <span style={{
+                    padding: '6px 12px', backgroundColor: '#EFF6FF', color: '#0EA5E9',
+                    borderRadius: '20px', fontSize: '12px', fontWeight: 600,
+                  }}>
                     Claimed by operator
                   </span>
                 )}
               </div>
 
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-midnight mb-3 leading-tight">{listing.name}</h1>
+              <h1 style={{ fontSize: 'clamp(24px, 4vw, 40px)', fontWeight: 800, color: '#1B1B1F', marginBottom: '16px', lineHeight: 1.15, letterSpacing: '-0.5px' }}>
+                {listing.name}
+              </h1>
 
-              <div className="flex flex-wrap items-center gap-4 mb-8 text-sm text-midnight/50">
-                <span className="flex items-center gap-1">
-                  <Star className="w-4 h-4 fill-golden text-golden" />
-                  <strong className="text-midnight">{listing.rating}</strong> ({listing.reviewCount} reviews)
+              <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '16px', marginBottom: '32px', fontSize: '14px', color: '#71717a' }}>
+                <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <Star size={16} fill="#F59E0B" color="#F59E0B" />
+                  <strong style={{ color: '#1B1B1F' }}>{listing.rating}</strong> ({listing.reviewCount} reviews)
                 </span>
-                <span className="flex items-center gap-1">
-                  <MapPin className="w-4 h-4" />
+                <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <MapPin size={16} />
                   {listing.city}, {listing.country}
                 </span>
               </div>
 
-              {/* Description */}
-              <div className="mb-10 pb-8 border-b border-warm-gray-dark/20">
-                <h2 className="text-lg font-bold text-midnight mb-3">About</h2>
-                <p className="text-midnight/70 leading-relaxed text-[15px]">{listing.description}</p>
+              {/* About */}
+              <div style={{ marginBottom: '40px', paddingBottom: '32px', borderBottom: '1px solid #f4f4f5' }}>
+                <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#1B1B1F', marginBottom: '16px' }}>About</h2>
+                <p style={{ color: '#52525b', lineHeight: 1.7, fontSize: '15px' }}>{listing.description}</p>
               </div>
 
               {/* Highlights */}
-              <div className="mb-10 pb-8 border-b border-warm-gray-dark/20">
-                <h2 className="text-lg font-bold text-midnight mb-4">Highlights</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div style={{ marginBottom: '40px', paddingBottom: '32px', borderBottom: '1px solid #f4f4f5' }}>
+                <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#1B1B1F', marginBottom: '20px' }}>Highlights</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: '12px' }}>
                   {listing.highlights.map((h) => (
-                    <div key={h} className="flex items-start gap-2.5 bg-warm-gray rounded-xl px-4 py-3">
-                      <CheckCircle className="w-4 h-4 text-sage mt-0.5 shrink-0" />
-                      <span className="text-sm text-midnight/80">{h}</span>
+                    <div key={h} style={{
+                      display: 'flex', alignItems: 'flex-start', gap: '10px',
+                      backgroundColor: '#F5F5F4', borderRadius: '14px', padding: '14px 16px',
+                    }}>
+                      <CheckCircle size={16} color="#16A34A" style={{ marginTop: '2px', flexShrink: 0 }} />
+                      <span style={{ fontSize: '14px', color: '#3f3f46' }}>{h}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Tags & Pedagogy */}
-              <div className="mb-10 pb-8 border-b border-warm-gray-dark/20">
-                <h2 className="text-lg font-bold text-midnight mb-4">Pedagogy & Tags</h2>
-                <div className="flex flex-wrap gap-2">
+              {/* Pedagogy & Tags */}
+              <div style={{ marginBottom: '40px', paddingBottom: '32px', borderBottom: '1px solid #f4f4f5' }}>
+                <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#1B1B1F', marginBottom: '20px' }}>Pedagogy & Tags</h2>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                   {listing.pedagogy.map((p) => (
-                    <span key={p} className="px-3.5 py-1.5 bg-coral/10 text-coral rounded-full text-sm font-semibold">
+                    <span key={p} style={{
+                      padding: '6px 16px', backgroundColor: '#FFF1F0', color: '#FF4438',
+                      borderRadius: '20px', fontSize: '13px', fontWeight: 600,
+                    }}>
                       {p}
                     </span>
                   ))}
                   {listing.tags.map((tag) => (
-                    <span key={tag} className="px-3.5 py-1.5 bg-warm-gray rounded-full text-sm font-medium text-midnight/60">
+                    <span key={tag} style={{
+                      padding: '6px 16px', backgroundColor: '#F5F5F4',
+                      borderRadius: '20px', fontSize: '13px', fontWeight: 500, color: '#71717a',
+                    }}>
                       {tag}
                     </span>
                   ))}
                 </div>
               </div>
 
-              {/* Families interested */}
+              {/* Families */}
               {familySignals.length > 0 && (
-                <div className="mb-10 pb-8 border-b border-warm-gray-dark/20">
-                  <h2 className="text-lg font-bold text-midnight mb-4 flex items-center gap-2">
-                    <Users className="w-5 h-5 text-sage" />
+                <div style={{ marginBottom: '40px', paddingBottom: '32px', borderBottom: '1px solid #f4f4f5' }}>
+                  <h2 style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '20px', fontWeight: 700, color: '#1B1B1F', marginBottom: '20px' }}>
+                    <Users size={20} color="#16A34A" />
                     Families in {listing.city}
                   </h2>
-                  <div className="space-y-3">
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                     {familySignals.map((signal) => (
                       <FamilySignalCard key={signal.id} signal={signal} />
                     ))}
@@ -162,21 +184,32 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
               )}
 
               {/* Location */}
-              <div className="mb-8">
-                <h2 className="text-lg font-bold text-midnight mb-4">Location</h2>
-                <div className="bg-warm-gray rounded-2xl p-8 text-center">
-                  <div className="w-14 h-14 bg-coral/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                    <MapPin className="w-7 h-7 text-coral" />
+              <div>
+                <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#1B1B1F', marginBottom: '20px' }}>Location</h2>
+                <div style={{
+                  backgroundColor: '#F5F5F4', borderRadius: '20px', padding: '40px',
+                  textAlign: 'center',
+                }}>
+                  <div style={{
+                    width: '56px', height: '56px', backgroundColor: '#FFF1F0', borderRadius: '16px',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px',
+                  }}>
+                    <MapPin size={28} color="#FF4438" />
                   </div>
-                  <p className="text-sm text-midnight/70 mb-1 font-medium">{listing.address}</p>
-                  <p className="text-xs text-midnight/30 mb-4">Place ID: {listing.googlePlaceId}</p>
+                  <p style={{ fontSize: '14px', color: '#3f3f46', fontWeight: 500, marginBottom: '4px' }}>{listing.address}</p>
+                  <p style={{ fontSize: '12px', color: '#a1a1aa', marginBottom: '20px' }}>Place ID: {listing.googlePlaceId}</p>
                   <a
                     href={listing.googleMapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-coral font-semibold text-sm rounded-xl hover:bg-coral hover:text-white transition-all shadow-sm"
+                    style={{
+                      display: 'inline-flex', alignItems: 'center', gap: '8px',
+                      padding: '12px 24px', backgroundColor: 'white', color: '#FF4438',
+                      fontWeight: 600, fontSize: '14px', borderRadius: '14px', textDecoration: 'none',
+                      boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
+                    }}
                   >
-                    <ExternalLink className="w-4 h-4" />
+                    <ExternalLink size={16} />
                     Open in Google Maps
                   </a>
                 </div>
@@ -184,107 +217,146 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
             </div>
 
             {/* Sidebar */}
-            <div className="lg:w-[360px] shrink-0">
-              <div className="sticky top-24 space-y-4">
+            <div className="lg:w-[360px]" style={{ flexShrink: 0 }}>
+              <div style={{ position: 'sticky', top: '96px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 {/* Price Card */}
-                <div className="bg-white rounded-2xl border-2 border-warm-gray-dark/40 p-6 shadow-lg">
-                  <div className="flex items-center justify-between mb-5">
+                <div style={{
+                  backgroundColor: 'white', borderRadius: '20px', padding: '28px',
+                  border: '2px solid #e7e5e4', boxShadow: '0 4px 24px rgba(0,0,0,0.06)',
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
                     <div>
-                      <div className="text-2xl font-bold text-coral">{listing.priceRange}</div>
+                      <div style={{ fontSize: '28px', fontWeight: 800, color: '#FF4438' }}>{listing.priceRange}</div>
                       {listing.priceNote && (
-                        <p className="text-xs text-midnight/40 mt-1">{listing.priceNote}</p>
+                        <p style={{ fontSize: '12px', color: '#a1a1aa', marginTop: '4px' }}>{listing.priceNote}</p>
                       )}
                     </div>
-                    <div className="flex items-center gap-1 bg-golden/10 px-2.5 py-1 rounded-lg">
-                      <Star className="w-4 h-4 fill-golden text-golden" />
-                      <span className="font-bold text-midnight text-sm">{listing.rating}</span>
+                    <div style={{
+                      display: 'flex', alignItems: 'center', gap: '4px',
+                      backgroundColor: '#FEF3C7', padding: '6px 12px', borderRadius: '10px',
+                    }}>
+                      <Star size={16} fill="#F59E0B" color="#F59E0B" />
+                      <span style={{ fontWeight: 700, color: '#1B1B1F', fontSize: '14px' }}>{listing.rating}</span>
                     </div>
                   </div>
 
                   {/* Quick Info */}
-                  <div className="space-y-3 mb-6 bg-warm-gray rounded-xl p-4">
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-midnight/50">Ages</span>
-                      <span className="font-semibold text-midnight">{listing.ageRange.min}–{listing.ageRange.max} years</span>
-                    </div>
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-midnight/50">Languages</span>
-                      <span className="font-semibold text-midnight">{listing.languages.join(', ')}</span>
-                    </div>
-                    {listing.schedule && (
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-midnight/50">Schedule</span>
-                        <span className="font-semibold text-midnight text-right max-w-[180px]">{listing.schedule}</span>
-                      </div>
-                    )}
-                    {listing.spotsAvailable !== undefined && (
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-midnight/50">Availability</span>
-                        <span className={`font-bold ${listing.spotsAvailable <= 3 ? 'text-coral' : 'text-sage'}`}>
-                          {listing.spotsAvailable} spots left
+                  <div style={{
+                    backgroundColor: '#F5F5F4', borderRadius: '14px', padding: '16px',
+                    marginBottom: '24px',
+                  }}>
+                    {[
+                      { label: 'Ages', value: `${listing.ageRange.min}–${listing.ageRange.max} years` },
+                      { label: 'Languages', value: listing.languages.join(', ') },
+                      ...(listing.schedule ? [{ label: 'Schedule', value: listing.schedule }] : []),
+                      ...(listing.spotsAvailable !== undefined ? [{
+                        label: 'Availability',
+                        value: `${listing.spotsAvailable} spots left`,
+                        highlight: listing.spotsAvailable <= 3,
+                      }] : []),
+                      { label: 'Interested', value: `${listing.familiesInterested} families` },
+                    ].map((item, i) => (
+                      <div key={item.label} style={{
+                        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                        padding: '10px 0', fontSize: '14px',
+                        borderBottom: i < 4 ? '1px solid #e7e5e4' : 'none',
+                      }}>
+                        <span style={{ color: '#71717a' }}>{item.label}</span>
+                        <span style={{
+                          fontWeight: 600,
+                          color: 'highlight' in item && item.highlight ? '#FF4438' : '#1B1B1F',
+                          textAlign: 'right', maxWidth: '180px',
+                        }}>
+                          {item.value}
                         </span>
                       </div>
-                    )}
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-midnight/50">Interested</span>
-                      <span className="font-semibold text-midnight">{listing.familiesInterested} families</span>
-                    </div>
+                    ))}
                   </div>
 
                   {/* CTAs */}
-                  <button className="w-full py-3.5 bg-coral text-white font-bold rounded-xl hover:bg-coral-dark transition-all mb-3 flex items-center justify-center gap-2 text-base shadow-md shadow-coral/20">
-                    <Calendar className="w-5 h-5" />
+                  <button style={{
+                    width: '100%', padding: '16px', backgroundColor: '#FF4438', color: 'white',
+                    fontWeight: 700, borderRadius: '14px', border: 'none', cursor: 'pointer',
+                    fontSize: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                    marginBottom: '12px',
+                  }}>
+                    <Calendar size={18} />
                     Request Info
                   </button>
-                  <div className="flex gap-2">
-                    <button className="flex-1 py-2.5 bg-warm-gray text-midnight font-medium rounded-xl hover:bg-warm-gray-dark transition-colors flex items-center justify-center gap-2 text-sm">
-                      <Heart className="w-4 h-4" />
-                      Save
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <button style={{
+                      flex: 1, padding: '12px', backgroundColor: '#F5F5F4', color: '#1B1B1F',
+                      fontWeight: 500, borderRadius: '14px', border: 'none', cursor: 'pointer',
+                      fontSize: '13px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
+                    }}>
+                      <Heart size={15} /> Save
                     </button>
-                    <button className="flex-1 py-2.5 bg-warm-gray text-midnight font-medium rounded-xl hover:bg-warm-gray-dark transition-colors flex items-center justify-center gap-2 text-sm">
-                      <Share2 className="w-4 h-4" />
-                      Share
+                    <button style={{
+                      flex: 1, padding: '12px', backgroundColor: '#F5F5F4', color: '#1B1B1F',
+                      fontWeight: 500, borderRadius: '14px', border: 'none', cursor: 'pointer',
+                      fontSize: '13px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
+                    }}>
+                      <Share2 size={15} /> Share
                     </button>
                   </div>
                 </div>
 
                 {/* Contact Card */}
-                <div className="bg-white rounded-2xl border border-warm-gray-dark/30 p-5">
-                  <h3 className="font-bold text-midnight mb-3 text-sm">Contact</h3>
-                  <div className="space-y-2.5">
+                <div style={{
+                  backgroundColor: 'white', borderRadius: '20px', padding: '24px',
+                  border: '1px solid #e7e5e4',
+                }}>
+                  <h3 style={{ fontWeight: 700, color: '#1B1B1F', marginBottom: '16px', fontSize: '14px' }}>Contact</h3>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                     {listing.phone && (
-                      <a href={`tel:${listing.phone}`} className="flex items-center gap-3 text-sm text-midnight/70 hover:text-coral transition-colors p-2 rounded-lg hover:bg-sand">
-                        <Phone className="w-4 h-4 shrink-0" />
-                        {listing.phone}
+                      <a href={`tel:${listing.phone}`} style={{
+                        display: 'flex', alignItems: 'center', gap: '12px', padding: '10px',
+                        fontSize: '14px', color: '#52525b', textDecoration: 'none', borderRadius: '10px',
+                      }}>
+                        <Phone size={16} /> {listing.phone}
                       </a>
                     )}
                     {listing.email && (
-                      <a href={`mailto:${listing.email}`} className="flex items-center gap-3 text-sm text-midnight/70 hover:text-coral transition-colors p-2 rounded-lg hover:bg-sand">
-                        <Mail className="w-4 h-4 shrink-0" />
-                        {listing.email}
+                      <a href={`mailto:${listing.email}`} style={{
+                        display: 'flex', alignItems: 'center', gap: '12px', padding: '10px',
+                        fontSize: '14px', color: '#52525b', textDecoration: 'none', borderRadius: '10px',
+                      }}>
+                        <Mail size={16} /> {listing.email}
                       </a>
                     )}
                     {listing.website && (
-                      <a href={listing.website} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm text-midnight/70 hover:text-coral transition-colors p-2 rounded-lg hover:bg-sand">
-                        <Globe className="w-4 h-4 shrink-0" />
-                        Visit website
+                      <a href={listing.website} target="_blank" rel="noopener noreferrer" style={{
+                        display: 'flex', alignItems: 'center', gap: '12px', padding: '10px',
+                        fontSize: '14px', color: '#52525b', textDecoration: 'none', borderRadius: '10px',
+                      }}>
+                        <Globe size={16} /> Visit website
                       </a>
                     )}
-                    <a href={listing.googleMapsUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm text-midnight/70 hover:text-coral transition-colors p-2 rounded-lg hover:bg-sand">
-                      <MapPin className="w-4 h-4 shrink-0" />
-                      Get directions
+                    <a href={listing.googleMapsUrl} target="_blank" rel="noopener noreferrer" style={{
+                      display: 'flex', alignItems: 'center', gap: '12px', padding: '10px',
+                      fontSize: '14px', color: '#52525b', textDecoration: 'none', borderRadius: '10px',
+                    }}>
+                      <MapPin size={16} /> Get directions
                     </a>
                   </div>
                 </div>
 
                 {/* Claim prompt */}
                 {!listing.claimedByOperator && (
-                  <div className="bg-golden/10 rounded-2xl p-5 border border-golden/20">
-                    <h3 className="font-bold text-midnight text-sm mb-2">Is this your listing?</h3>
-                    <p className="text-xs text-midnight/50 mb-3">
+                  <div style={{
+                    backgroundColor: '#FFFBEB', borderRadius: '20px', padding: '24px',
+                    border: '1px solid #FEF3C7',
+                  }}>
+                    <h3 style={{ fontWeight: 700, color: '#1B1B1F', fontSize: '14px', marginBottom: '8px' }}>
+                      Is this your listing?
+                    </h3>
+                    <p style={{ fontSize: '13px', color: '#71717a', marginBottom: '16px', lineHeight: 1.5 }}>
                       Claim it to manage your profile, respond to inquiries, and get featured.
                     </p>
-                    <button className="w-full py-2.5 bg-midnight text-white font-semibold rounded-xl text-sm hover:bg-midnight-light transition-colors">
+                    <button style={{
+                      width: '100%', padding: '12px', backgroundColor: '#1B1B1F', color: 'white',
+                      fontWeight: 600, borderRadius: '14px', border: 'none', cursor: 'pointer', fontSize: '13px',
+                    }}>
                       Claim this listing
                     </button>
                   </div>

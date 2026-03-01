@@ -1,65 +1,93 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { MapPin, Users, Wifi, Shield, Sun } from 'lucide-react';
+import { MapPin, Users, Wifi, Shield } from 'lucide-react';
 import { City } from '@/data/listings';
 
 export default function CityCard({ city, size = 'default' }: { city: City; size?: 'default' | 'large' }) {
   const isLarge = size === 'large';
+  const height = isLarge ? '420px' : '320px';
 
   return (
     <Link
       href={`/city/${city.slug}`}
-      className="trip-card block relative rounded-2xl overflow-hidden group"
-      style={{ height: isLarge ? '420px' : '320px' }}
+      className="card-hover"
+      style={{
+        display: 'block',
+        position: 'relative',
+        borderRadius: '16px',
+        overflow: 'hidden',
+        height,
+        textDecoration: 'none',
+      }}
     >
       <Image
         src={city.coverImage}
         alt={city.name}
         fill
-        className="trip-card-image object-cover"
+        style={{ objectFit: 'cover' }}
         sizes={isLarge ? '(max-width: 768px) 100vw, 50vw' : '(max-width: 768px) 100vw, 33vw'}
       />
 
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-midnight/90 via-midnight/30 to-transparent" />
+      {/* Gradient overlay */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.05) 100%)',
+      }} />
 
       {/* Nomad Score */}
-      <div className="absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1.5 bg-white/95 backdrop-blur-sm rounded-full">
-        <Sun className="w-3.5 h-3.5 text-golden" />
-        <span className="text-xs font-bold text-midnight">{city.nomadScore}/10</span>
+      <div style={{
+        position: 'absolute', top: '16px', right: '16px',
+        display: 'flex', alignItems: 'center', gap: '6px',
+        padding: '6px 12px', backgroundColor: 'rgba(255,255,255,0.95)',
+        borderRadius: '20px', backdropFilter: 'blur(8px)',
+      }}>
+        <span style={{ fontSize: '12px', fontWeight: 700, color: '#1B1B1F' }}>{city.nomadScore}/10</span>
       </div>
 
-      {/* Families Here */}
-      <div className="absolute top-4 left-4 flex items-center gap-1.5 px-3 py-1.5 bg-coral/90 backdrop-blur-sm rounded-full text-xs font-semibold text-white">
-        <Users className="w-3.5 h-3.5" />
-        {city.familiesHere} families here
+      {/* Families badge */}
+      <div style={{
+        position: 'absolute', top: '16px', left: '16px',
+        display: 'flex', alignItems: 'center', gap: '6px',
+        padding: '6px 12px', backgroundColor: 'rgba(255,68,56,0.9)',
+        borderRadius: '20px', backdropFilter: 'blur(8px)',
+      }}>
+        <Users size={13} color="white" />
+        <span style={{ fontSize: '12px', fontWeight: 600, color: 'white' }}>{city.familiesHere} families</span>
       </div>
 
       {/* Content */}
-      <div className="absolute bottom-0 left-0 right-0 p-5">
-        <div className="flex items-center gap-1.5 text-white/70 text-sm mb-1">
-          <MapPin className="w-3.5 h-3.5" />
+      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '24px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'rgba(255,255,255,0.7)', fontSize: '13px', marginBottom: '6px' }}>
+          <MapPin size={14} />
           {city.country}
         </div>
-        <h3 className={`font-bold text-white mb-2 ${isLarge ? 'text-3xl' : 'text-2xl'}`}>
+        <h3 style={{
+          fontWeight: 800, color: 'white', marginBottom: '8px',
+          fontSize: isLarge ? '32px' : '26px',
+          letterSpacing: '-0.5px',
+        }}>
           {city.name}
         </h3>
-        <p className={`text-white/70 text-sm mb-4 ${isLarge ? 'line-clamp-2' : 'line-clamp-1'}`}>
+        <p style={{
+          color: 'rgba(255,255,255,0.65)', fontSize: '14px', marginBottom: '16px',
+          display: '-webkit-box', WebkitLineClamp: isLarge ? 2 : 1,
+          WebkitBoxOrient: 'vertical', overflow: 'hidden', lineHeight: '1.5',
+        }}>
           {city.shortDescription}
         </p>
 
         {/* Stats */}
-        <div className="flex items-center gap-4 text-xs text-white/60">
-          <span className="flex items-center gap-1">
-            <MapPin className="w-3 h-3" />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', fontSize: '12px', color: 'rgba(255,255,255,0.55)' }}>
+          <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <MapPin size={12} />
             {city.listingCount} listings
           </span>
-          <span className="flex items-center gap-1">
-            <Wifi className="w-3 h-3" />
+          <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <Wifi size={12} />
             {city.internetSpeed}
           </span>
-          <span className="flex items-center gap-1">
-            <Shield className="w-3 h-3" />
+          <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <Shield size={12} />
             {city.safety}
           </span>
         </div>

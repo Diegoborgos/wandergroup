@@ -1,99 +1,132 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Star, MapPin, Users, Clock, ExternalLink, CheckCircle } from 'lucide-react';
+import { Star, MapPin, CheckCircle } from 'lucide-react';
 import { Listing, categoryInfo } from '@/data/listings';
 
 export default function ListingCard({ listing }: { listing: Listing }) {
   const catInfo = categoryInfo[listing.category];
 
   return (
-    <Link href={`/listing/${listing.slug}`} className="trip-card block bg-white rounded-2xl overflow-hidden shadow-sm border border-warm-gray-dark/30 group">
+    <Link
+      href={`/listing/${listing.slug}`}
+      className="card-hover"
+      style={{
+        display: 'block',
+        backgroundColor: 'white',
+        borderRadius: '16px',
+        overflow: 'hidden',
+        textDecoration: 'none',
+        border: '1px solid #e7e5e4',
+      }}
+    >
       {/* Image */}
-      <div className="relative overflow-hidden" style={{ height: '210px' }}>
+      <div style={{ position: 'relative', height: '220px', overflow: 'hidden' }}>
         <Image
           src={listing.coverImage}
           alt={listing.name}
           fill
-          className="trip-card-image object-cover"
+          className="img-zoom"
+          style={{ objectFit: 'cover' }}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
         {/* Category Badge */}
-        <div className="absolute top-3 left-3 flex items-center gap-1.5 px-3 py-1.5 bg-white/95 backdrop-blur-sm rounded-full text-xs font-semibold text-midnight shadow-sm">
+        <div style={{
+          position: 'absolute', top: '12px', left: '12px',
+          display: 'flex', alignItems: 'center', gap: '6px',
+          padding: '6px 12px', backgroundColor: 'rgba(255,255,255,0.95)',
+          borderRadius: '20px', fontSize: '12px', fontWeight: 600, color: '#1B1B1F',
+          backdropFilter: 'blur(8px)',
+        }}>
           <span>{catInfo.icon}</span>
           <span>{catInfo.label}</span>
         </div>
         {/* Verified Badge */}
         {listing.verified && (
-          <div className="absolute top-3 right-3 flex items-center gap-1 px-2.5 py-1 bg-sage/90 backdrop-blur-sm rounded-full text-xs font-medium text-white">
-            <CheckCircle className="w-3 h-3" />
+          <div style={{
+            position: 'absolute', top: '12px', right: '12px',
+            display: 'flex', alignItems: 'center', gap: '4px',
+            padding: '5px 10px', backgroundColor: 'rgba(22,163,74,0.9)',
+            borderRadius: '20px', fontSize: '11px', fontWeight: 600, color: 'white',
+            backdropFilter: 'blur(8px)',
+          }}>
+            <CheckCircle size={12} />
             Verified
           </div>
         )}
-        {/* Spots Available */}
+        {/* Low spots warning */}
         {listing.spotsAvailable !== undefined && listing.spotsAvailable <= 3 && (
-          <div className="absolute bottom-3 left-3 px-3 py-1.5 bg-coral text-white rounded-full text-xs font-bold shadow-sm">
+          <div style={{
+            position: 'absolute', bottom: '12px', left: '12px',
+            padding: '6px 12px', backgroundColor: '#FF4438', color: 'white',
+            borderRadius: '20px', fontSize: '12px', fontWeight: 700,
+          }}>
             Only {listing.spotsAvailable} spots left
           </div>
         )}
       </div>
 
       {/* Content */}
-      <div className="p-5">
+      <div style={{ padding: '20px' }}>
         {/* Title & Rating */}
-        <div className="flex items-start justify-between gap-2 mb-2">
-          <h3 className="font-bold text-midnight text-[15px] leading-snug group-hover:text-coral transition-colors line-clamp-2">
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '12px', marginBottom: '8px' }}>
+          <h3 style={{
+            fontWeight: 700, color: '#1B1B1F', fontSize: '16px',
+            lineHeight: '1.3', display: '-webkit-box',
+            WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden',
+          }}>
             {listing.name}
           </h3>
-          <div className="flex items-center gap-1 shrink-0 bg-warm-gray px-2 py-0.5 rounded-md">
-            <Star className="w-3.5 h-3.5 fill-golden text-golden" />
-            <span className="text-sm font-bold text-midnight">{listing.rating}</span>
+          <div style={{
+            display: 'flex', alignItems: 'center', gap: '4px',
+            backgroundColor: '#FEF3C7', padding: '4px 8px', borderRadius: '8px',
+            flexShrink: 0,
+          }}>
+            <Star size={14} fill="#F59E0B" color="#F59E0B" />
+            <span style={{ fontSize: '13px', fontWeight: 700, color: '#1B1B1F' }}>{listing.rating}</span>
           </div>
         </div>
 
         {/* Location */}
-        <div className="flex items-center gap-1 text-xs text-midnight/50 mb-3">
-          <MapPin className="w-3 h-3" />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '13px', color: '#a1a1aa', marginBottom: '12px' }}>
+          <MapPin size={13} />
           <span>{listing.city}, {listing.country}</span>
         </div>
 
         {/* Description */}
-        <p className="text-sm text-midnight/60 line-clamp-2 mb-4 leading-relaxed">
+        <p style={{
+          fontSize: '14px', color: '#71717a', lineHeight: '1.5',
+          display: '-webkit-box', WebkitLineClamp: 2,
+          WebkitBoxOrient: 'vertical', overflow: 'hidden',
+          marginBottom: '16px',
+        }}>
           {listing.shortDescription}
         </p>
 
         {/* Tags */}
-        <div className="flex flex-wrap gap-1.5 mb-4">
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '16px' }}>
           {listing.tags.slice(0, 3).map((tag) => (
-            <span key={tag} className="px-2.5 py-1 bg-sand rounded-full text-xs font-medium text-midnight/70">
+            <span key={tag} style={{
+              padding: '4px 10px', backgroundColor: '#F5F5F4',
+              borderRadius: '20px', fontSize: '12px', fontWeight: 500, color: '#52525b',
+            }}>
               {tag}
             </span>
           ))}
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between pt-3 border-t border-warm-gray-dark/20">
-          <div className="flex items-center gap-3 text-xs text-midnight/50">
-            <span className="flex items-center gap-1">
-              <Users className="w-3.5 h-3.5" />
-              {listing.ageRange.min}–{listing.ageRange.max}y
-            </span>
-            <span className="flex items-center gap-1">
-              <Clock className="w-3.5 h-3.5" />
-              {listing.languages[0]}
-            </span>
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          paddingTop: '16px', borderTop: '1px solid #f4f4f5',
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', fontSize: '12px', color: '#a1a1aa' }}>
+            <span>{listing.ageRange.min}–{listing.ageRange.max} yrs</span>
+            <span>{listing.languages[0]}</span>
           </div>
-          <span className="text-sm font-bold text-coral">
+          <span style={{ fontSize: '15px', fontWeight: 700, color: '#FF4438' }}>
             {listing.priceRange}
           </span>
         </div>
-
-        {/* Families interested */}
-        {listing.familiesInterested > 10 && (
-          <div className="mt-3 flex items-center gap-1.5 text-xs text-sage font-medium">
-            <ExternalLink className="w-3 h-3" />
-            {listing.familiesInterested} families interested
-          </div>
-        )}
       </div>
     </Link>
   );

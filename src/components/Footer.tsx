@@ -1,72 +1,91 @@
 import Link from 'next/link';
-import { MapPin, Heart } from 'lucide-react';
+import { Heart } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="bg-midnight text-white">
+    <footer style={{ backgroundColor: '#1B1B1F', color: 'white' }}>
       {/* CTA Section */}
-      <div className="border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+      <div style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '80px 24px', textAlign: 'center' }}>
+          <h2 style={{ fontSize: 'clamp(28px, 4vw, 40px)', fontWeight: 800, marginBottom: '16px', letterSpacing: '-0.5px' }}>
             Find your people, wherever you land.
           </h2>
-          <p className="text-white/60 text-lg mb-8 max-w-2xl mx-auto">
+          <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '17px', marginBottom: '32px', maxWidth: '560px', margin: '0 auto 32px', lineHeight: 1.6 }}>
             Join the growing community of families building a different kind of childhood — globally connected, locally rooted.
           </p>
-          <button className="inline-flex items-center gap-2 px-8 py-4 bg-coral text-white font-semibold rounded-xl hover:bg-coral-dark transition-all hover:shadow-lg hover:shadow-coral/25 text-lg">
-            <Heart className="w-5 h-5" />
+          <button style={{
+            display: 'inline-flex', alignItems: 'center', gap: '8px',
+            padding: '16px 32px', backgroundColor: '#FF4438', color: 'white',
+            fontWeight: 700, borderRadius: '14px', border: 'none', cursor: 'pointer', fontSize: '15px',
+          }}>
+            <Heart size={18} />
             Join the Community
           </button>
         </div>
       </div>
 
       {/* Links */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '48px 24px' }}>
+        <div className="grid grid-cols-2 md:grid-cols-4" style={{ gap: '32px' }}>
           <div>
-            <h3 className="font-semibold mb-4 text-white/90">Cities</h3>
-            <ul className="space-y-2">
-              <li><Link href="/city/lisbon" className="text-white/50 hover:text-coral transition-colors text-sm">Lisbon</Link></li>
-              <li><Link href="/city/ericeira" className="text-white/50 hover:text-coral transition-colors text-sm">Ericeira</Link></li>
-              <li><Link href="/city/sintra" className="text-white/50 hover:text-coral transition-colors text-sm">Sintra</Link></li>
-              <li><Link href="/city/cascais" className="text-white/50 hover:text-coral transition-colors text-sm">Cascais</Link></li>
+            <h3 style={{ fontWeight: 600, marginBottom: '16px', fontSize: '14px', color: 'rgba(255,255,255,0.8)' }}>Cities</h3>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {['Lisbon', 'Ericeira', 'Sintra', 'Cascais'].map((city) => (
+                <li key={city}>
+                  <Link href={`/city/${city.toLowerCase()}`} style={{ color: 'rgba(255,255,255,0.4)', fontSize: '13px', textDecoration: 'none' }}>
+                    {city}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
           <div>
-            <h3 className="font-semibold mb-4 text-white/90">Categories</h3>
-            <ul className="space-y-2">
-              <li><span className="text-white/50 text-sm">Forest Schools</span></li>
-              <li><span className="text-white/50 text-sm">Alternative Schools</span></li>
-              <li><span className="text-white/50 text-sm">Learning Pods</span></li>
-              <li><span className="text-white/50 text-sm">Communities</span></li>
+            <h3 style={{ fontWeight: 600, marginBottom: '16px', fontSize: '14px', color: 'rgba(255,255,255,0.8)' }}>Categories</h3>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {['Forest Schools', 'Alternative Schools', 'Learning Pods', 'Communities'].map((cat) => (
+                <li key={cat}>
+                  <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '13px' }}>{cat}</span>
+                </li>
+              ))}
             </ul>
           </div>
           <div>
-            <h3 className="font-semibold mb-4 text-white/90">For Operators</h3>
-            <ul className="space-y-2">
-              <li><span className="text-white/50 text-sm">Claim Your Listing</span></li>
-              <li><span className="text-white/50 text-sm">Promote Your School</span></li>
-              <li><span className="text-white/50 text-sm">Partner With Us</span></li>
+            <h3 style={{ fontWeight: 600, marginBottom: '16px', fontSize: '14px', color: 'rgba(255,255,255,0.8)' }}>For Operators</h3>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {['Claim Your Listing', 'Promote Your School', 'Partner With Us'].map((item) => (
+                <li key={item}>
+                  <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '13px' }}>{item}</span>
+                </li>
+              ))}
             </ul>
           </div>
           <div>
-            <h3 className="font-semibold mb-4 text-white/90">Company</h3>
-            <ul className="space-y-2">
-              <li><span className="text-white/50 text-sm">About</span></li>
-              <li><span className="text-white/50 text-sm">Blog</span></li>
-              <li><span className="text-white/50 text-sm">Contact</span></li>
+            <h3 style={{ fontWeight: 600, marginBottom: '16px', fontSize: '14px', color: 'rgba(255,255,255,0.8)' }}>Company</h3>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {['About', 'Blog', 'Contact'].map((item) => (
+                <li key={item}>
+                  <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '13px' }}>{item}</span>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-coral rounded-lg flex items-center justify-center">
-              <MapPin className="w-4 h-4 text-white" />
+        <div style={{
+          borderTop: '1px solid rgba(255,255,255,0.08)', marginTop: '48px', paddingTop: '32px',
+          display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '16px',
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div style={{
+              width: '32px', height: '32px', backgroundColor: '#FF4438', borderRadius: '8px',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white',
+              fontWeight: 800, fontSize: '16px',
+            }}>
+              W
             </div>
-            <span className="font-bold">wandergroup</span>
+            <span style={{ fontWeight: 700, fontSize: '15px' }}>wandergroup</span>
           </div>
-          <p className="text-white/40 text-sm">
+          <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: '13px' }}>
             For families who refused the default.
           </p>
         </div>

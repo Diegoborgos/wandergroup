@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, MapPin, Users, GraduationCap, Globe, Star, Search, ChevronRight } from 'lucide-react';
+import { ArrowRight, Search, ChevronRight, Users, Star, MapPin } from 'lucide-react';
 import CityCard from '@/components/CityCard';
 import ListingCard from '@/components/ListingCard';
 import FamilySignalCard from '@/components/FamilySignalCard';
@@ -13,64 +13,96 @@ export default function Home() {
 
   return (
     <>
-      {/* Hero Section */}
-      <section className="relative flex items-center overflow-hidden" style={{ minHeight: '92vh' }}>
-        {/* Background Image */}
-        <div className="absolute inset-0">
+      {/* ─── HERO ─── */}
+      <section style={{ position: 'relative', display: 'flex', alignItems: 'center', minHeight: '100vh', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0 }}>
           <Image
-            src="https://images.unsplash.com/photo-1476231682828-37e571bc172f?w=1800"
+            src="https://images.unsplash.com/photo-1476231682828-37e571bc172f?w=1800&q=80"
             alt="Children in nature"
             fill
-            className="object-cover"
+            style={{ objectFit: 'cover' }}
             priority
             sizes="100vw"
           />
-          <div className="hero-overlay absolute inset-0" />
+          <div className="hero-overlay" style={{ position: 'absolute', inset: 0 }} />
         </div>
 
-        {/* Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full text-white/90 text-sm mb-6 border border-white/20">
-              <Globe className="w-4 h-4 text-coral-light" />
+        <div style={{ position: 'relative', zIndex: 10, maxWidth: '1280px', margin: '0 auto', padding: '120px 24px 80px' }}>
+          <div style={{ maxWidth: '680px' }}>
+            {/* Badge */}
+            <div style={{
+              display: 'inline-flex', alignItems: 'center', gap: '8px',
+              padding: '8px 16px', backgroundColor: 'rgba(255,255,255,0.12)',
+              borderRadius: '24px', color: 'rgba(255,255,255,0.9)', fontSize: '13px',
+              marginBottom: '28px', border: '1px solid rgba(255,255,255,0.15)',
+              backdropFilter: 'blur(8px)',
+            }}>
+              <Users size={15} />
               <span>{cities.reduce((sum, c) => sum + c.familiesHere, 0)}+ families across {cities.length} cities</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-white leading-[1.1] mb-6 tracking-tight">
-              Find your people,
-              <br />
+            {/* Headline */}
+            <h1 style={{
+              fontSize: 'clamp(40px, 7vw, 72px)',
+              fontWeight: 900,
+              color: 'white',
+              lineHeight: 1.05,
+              marginBottom: '24px',
+              letterSpacing: '-1.5px',
+            }}>
+              Find your people,<br />
               <span className="gradient-text">wherever you land.</span>
             </h1>
 
-            <p className="text-lg md:text-xl text-white/70 mb-10 max-w-xl leading-relaxed">
-              The starting point for families who refused the default. Discover alternative schools, forest schools, learning pods, and like-minded families — all in one place.
+            {/* Subtitle */}
+            <p style={{
+              fontSize: '18px', color: 'rgba(255,255,255,0.65)', marginBottom: '40px',
+              maxWidth: '520px', lineHeight: 1.6,
+            }}>
+              The starting point for families who refused the default. Discover alternative schools, forest schools, learning pods, and like-minded families.
             </p>
 
             {/* Search Bar */}
-            <div className="flex flex-col sm:flex-row gap-3 max-w-xl">
-              <div className="flex-1 relative">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-midnight/40" />
+            <div style={{ display: 'flex', gap: '12px', maxWidth: '520px' }} className="flex-col sm:flex-row">
+              <div style={{ flex: 1, position: 'relative' }}>
+                <Search size={18} style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: '#a1a1aa' }} />
                 <input
                   type="text"
-                  placeholder="Where are you heading? Try Lisbon, Ericeira..."
-                  className="w-full pl-12 pr-4 py-4 bg-white rounded-xl text-midnight placeholder:text-midnight/40 text-sm font-medium outline-none focus:ring-2 focus:ring-coral/50"
+                  placeholder="Where are you heading?"
+                  style={{
+                    width: '100%', padding: '16px 16px 16px 48px',
+                    backgroundColor: 'white', borderRadius: '14px',
+                    border: 'none', outline: 'none', fontSize: '14px',
+                    color: '#1B1B1F', fontWeight: 500,
+                  }}
                 />
               </div>
-              <button className="px-8 py-4 bg-coral text-white font-semibold rounded-xl hover:bg-coral-dark transition-all hover:shadow-lg hover:shadow-coral/25 flex items-center justify-center gap-2">
+              <button style={{
+                padding: '16px 32px', backgroundColor: '#FF4438', color: 'white',
+                fontWeight: 700, borderRadius: '14px', border: 'none', cursor: 'pointer',
+                fontSize: '14px', display: 'flex', alignItems: 'center', gap: '8px',
+                justifyContent: 'center', whiteSpace: 'nowrap',
+              }}>
                 Explore
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight size={16} />
               </button>
             </div>
 
             {/* Quick city links */}
-            <div className="flex flex-wrap gap-2 mt-6">
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '24px' }}>
               {cities.map((city) => (
                 <Link
                   key={city.slug}
                   href={`/city/${city.slug}`}
-                  className="flex items-center gap-1.5 px-3 py-1.5 bg-white/10 backdrop-blur-sm rounded-full text-white/80 text-sm hover:bg-white/20 transition-colors border border-white/10"
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: '6px',
+                    padding: '8px 14px', backgroundColor: 'rgba(255,255,255,0.1)',
+                    borderRadius: '20px', color: 'rgba(255,255,255,0.75)', fontSize: '13px',
+                    textDecoration: 'none', border: '1px solid rgba(255,255,255,0.1)',
+                    backdropFilter: 'blur(4px)', fontWeight: 500,
+                  }}
                 >
-                  <MapPin className="w-3 h-3" />
+                  <MapPin size={12} />
                   {city.name}
                 </Link>
               ))}
@@ -79,53 +111,53 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stats Bar */}
-      <section className="bg-white border-b border-warm-gray-dark/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div>
-              <div className="text-3xl font-bold text-coral mb-1">{listings.length}+</div>
-              <div className="text-sm text-midnight/50">Curated Listings</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-coral mb-1">{cities.length}</div>
-              <div className="text-sm text-midnight/50">Cities (growing)</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-coral mb-1">{cities.reduce((sum, c) => sum + c.familiesHere, 0)}+</div>
-              <div className="text-sm text-midnight/50">Active Families</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-coral mb-1">9</div>
-              <div className="text-sm text-midnight/50">Categories</div>
-            </div>
+      {/* ─── STATS BAR ─── */}
+      <section style={{ backgroundColor: 'white', borderBottom: '1px solid #e7e5e4' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '40px 24px' }}>
+          <div className="grid grid-cols-2 md:grid-cols-4" style={{ gap: '32px', textAlign: 'center' }}>
+            {[
+              { value: `${listings.length}+`, label: 'Curated Listings' },
+              { value: String(cities.length), label: 'Cities (growing)' },
+              { value: `${cities.reduce((s, c) => s + c.familiesHere, 0)}+`, label: 'Active Families' },
+              { value: '9', label: 'Categories' },
+            ].map((stat) => (
+              <div key={stat.label}>
+                <div style={{ fontSize: '32px', fontWeight: 800, color: '#FF4438', marginBottom: '4px', letterSpacing: '-1px' }}>{stat.value}</div>
+                <div style={{ fontSize: '13px', color: '#a1a1aa', fontWeight: 500 }}>{stat.label}</div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Categories */}
-      <section className="bg-warm-gray py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-midnight mb-3">
+      {/* ─── CATEGORIES ─── */}
+      <section style={{ backgroundColor: '#F5F5F4', padding: '80px 0' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+            <h2 style={{ fontSize: '36px', fontWeight: 800, color: '#1B1B1F', marginBottom: '12px', letterSpacing: '-0.5px' }}>
               What are you looking for?
             </h2>
-            <p className="text-midnight/50 text-lg">
+            <p style={{ fontSize: '16px', color: '#71717a' }}>
               Every option your family needs — from schools to communities to adventures.
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6" style={{ gap: '16px' }}>
             {topCategories.map((catKey) => {
               const cat = categoryInfo[catKey];
               return (
                 <div
                   key={catKey}
-                  className="category-pill bg-white rounded-2xl p-5 text-center cursor-pointer border border-transparent hover:border-coral/20"
+                  className="card-hover"
+                  style={{
+                    backgroundColor: 'white', borderRadius: '16px',
+                    padding: '24px 16px', textAlign: 'center', cursor: 'pointer',
+                    border: '1px solid transparent',
+                  }}
                 >
-                  <div className="text-3xl mb-3">{cat.icon}</div>
-                  <h3 className="font-semibold text-midnight text-sm mb-1">{cat.label}</h3>
-                  <p className="text-xs text-midnight/40">{cat.description}</p>
+                  <div style={{ fontSize: '32px', marginBottom: '12px' }}>{cat.icon}</div>
+                  <h3 style={{ fontWeight: 700, color: '#1B1B1F', fontSize: '14px', marginBottom: '4px' }}>{cat.label}</h3>
+                  <p style={{ fontSize: '12px', color: '#a1a1aa' }}>{cat.description}</p>
                 </div>
               );
             })}
@@ -133,59 +165,49 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Cities */}
-      <section className="bg-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-end justify-between mb-10">
+      {/* ─── CITIES ─── */}
+      <section style={{ backgroundColor: 'white', padding: '80px 0' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px' }}>
+          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '40px' }}>
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-midnight mb-3">
+              <h2 style={{ fontSize: '36px', fontWeight: 800, color: '#1B1B1F', marginBottom: '12px', letterSpacing: '-0.5px' }}>
                 Explore Cities
               </h2>
-              <p className="text-midnight/50 text-lg">
+              <p style={{ fontSize: '16px', color: '#71717a' }}>
                 Curated city guides for alternative education families.
               </p>
             </div>
-            <Link href="/destinations" className="hidden md:flex items-center gap-1.5 text-coral font-semibold text-sm hover:gap-2.5 transition-all">
-              View all
-              <ChevronRight className="w-4 h-4" />
+            <Link href="/destinations" className="hidden md:flex" style={{ alignItems: 'center', gap: '6px', color: '#FF4438', fontWeight: 600, fontSize: '14px', textDecoration: 'none' }}>
+              View all <ChevronRight size={16} />
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: '24px' }}>
             <CityCard city={cities[0]} size="large" />
-            <div className="grid grid-cols-1 gap-6">
+            <div className="grid grid-cols-1" style={{ gap: '24px' }}>
               <CityCard city={cities[1]} />
-              <div className="grid grid-cols-2 gap-6">
+              <div className="grid grid-cols-2" style={{ gap: '24px' }}>
                 <CityCard city={cities[2]} />
                 <CityCard city={cities[3]} />
               </div>
             </div>
           </div>
-
-          <div className="mt-6 text-center md:hidden">
-            <Link href="/destinations" className="inline-flex items-center gap-1.5 text-coral font-semibold text-sm">
-              View all cities
-              <ChevronRight className="w-4 h-4" />
-            </Link>
-          </div>
         </div>
       </section>
 
-      {/* Featured Listings */}
-      <section className="bg-sand py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-end justify-between mb-10">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-midnight mb-3">
-                Top-Rated Options
-              </h2>
-              <p className="text-midnight/50 text-lg">
-                The highest-rated schools, pods, and experiences across Portugal.
-              </p>
-            </div>
+      {/* ─── FEATURED LISTINGS ─── */}
+      <section style={{ backgroundColor: '#FFF8F5', padding: '80px 0' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px' }}>
+          <div style={{ marginBottom: '40px' }}>
+            <h2 style={{ fontSize: '36px', fontWeight: 800, color: '#1B1B1F', marginBottom: '12px', letterSpacing: '-0.5px' }}>
+              Top-Rated Options
+            </h2>
+            <p style={{ fontSize: '16px', color: '#71717a' }}>
+              The highest-rated schools, pods, and experiences across Portugal.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3" style={{ gap: '24px' }}>
             {featuredListings.map((listing) => (
               <ListingCard key={listing.id} listing={listing} />
             ))}
@@ -193,110 +215,114 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Who's Here - Family Signals */}
-      <section className="bg-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-end justify-between mb-10">
-            <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-sage/10 text-sage text-sm font-medium rounded-full mb-3">
-                <Users className="w-4 h-4" />
-                Live community
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-midnight mb-3">
-                Who&apos;s here right now?
-              </h2>
-              <p className="text-midnight/50 text-lg">
-                Families currently in Portugal or arriving soon. Connect before you land.
-              </p>
+      {/* ─── WHO'S HERE ─── */}
+      <section style={{ backgroundColor: 'white', padding: '80px 0' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px' }}>
+          <div style={{ marginBottom: '40px' }}>
+            <div style={{
+              display: 'inline-flex', alignItems: 'center', gap: '8px',
+              padding: '6px 14px', backgroundColor: '#F0FDF4', color: '#16A34A',
+              fontSize: '13px', fontWeight: 600, borderRadius: '20px', marginBottom: '16px',
+            }}>
+              <Users size={14} />
+              Live community
             </div>
+            <h2 style={{ fontSize: '36px', fontWeight: 800, color: '#1B1B1F', marginBottom: '12px', letterSpacing: '-0.5px' }}>
+              Who&apos;s here right now?
+            </h2>
+            <p style={{ fontSize: '16px', color: '#71717a' }}>
+              Families currently in Portugal or arriving soon. Connect before you land.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: '16px' }}>
             {recentSignals.map((signal) => (
               <FamilySignalCard key={signal.id} signal={signal} />
             ))}
           </div>
 
-          <div className="text-center mt-8">
-            <button className="inline-flex items-center gap-2 px-6 py-3 bg-midnight text-white font-semibold rounded-xl hover:bg-midnight-light transition-colors">
-              <GraduationCap className="w-5 h-5" />
+          <div style={{ textAlign: 'center', marginTop: '32px' }}>
+            <button style={{
+              padding: '14px 28px', backgroundColor: '#1B1B1F', color: 'white',
+              fontWeight: 600, borderRadius: '14px', border: 'none', cursor: 'pointer',
+              fontSize: '14px',
+            }}>
               Signal your arrival
             </button>
           </div>
         </div>
       </section>
 
-      {/* How It Works */}
-      <section className="bg-midnight text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-3">
+      {/* ─── HOW IT WORKS ─── */}
+      <section style={{ backgroundColor: '#1B1B1F', color: 'white', padding: '80px 0' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '64px' }}>
+            <h2 style={{ fontSize: '36px', fontWeight: 800, marginBottom: '12px', letterSpacing: '-0.5px' }}>
               How it works
             </h2>
-            <p className="text-white/50 text-lg">
+            <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.5)' }}>
               Find your people in three simple steps.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
-            <div className="flex flex-col items-center text-center">
-              <div style={{width:'64px',height:'64px',display:'flex',alignItems:'center',justifyContent:'center'}} className="bg-coral/20 rounded-2xl mb-6">
-                <Search className="w-8 h-8 text-coral" />
+          <div className="grid grid-cols-1 md:grid-cols-3" style={{ gap: '48px' }}>
+            {[
+              { icon: <Search size={28} />, num: '01', title: 'Browse your city', desc: 'Explore curated city pages with every alternative education option — schools, pods, forest schools, retreats, and communities.' },
+              { icon: <Users size={28} />, num: '02', title: 'Find your people', desc: 'See which families are already there or arriving soon. Connect before you even land. Your kids will have friends from day one.' },
+              { icon: <Star size={28} />, num: '03', title: 'Join & contribute', desc: 'Leave reviews, share your experience, vouch for trusted options. The community grows stronger with every family.' },
+            ].map((step) => (
+              <div key={step.num} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+                <div style={{
+                  width: '64px', height: '64px', borderRadius: '16px',
+                  backgroundColor: 'rgba(255,68,56,0.15)', display: 'flex',
+                  alignItems: 'center', justifyContent: 'center', color: '#FF4438',
+                  marginBottom: '24px',
+                }}>
+                  {step.icon}
+                </div>
+                <div style={{ color: '#FF4438', fontWeight: 700, fontSize: '13px', marginBottom: '8px' }}>{step.num}</div>
+                <h3 style={{ fontSize: '20px', fontWeight: 700, marginBottom: '12px' }}>{step.title}</h3>
+                <p style={{ color: 'rgba(255,255,255,0.45)', maxWidth: '280px', lineHeight: 1.6, fontSize: '14px' }}>
+                  {step.desc}
+                </p>
               </div>
-              <div className="text-coral font-bold text-sm mb-2">01</div>
-              <h3 className="text-xl font-bold mb-3">Browse your city</h3>
-              <p className="text-white/50 max-w-xs">
-                Explore curated city pages with every alternative education option — schools, pods, forest schools, retreats, and communities.
-              </p>
-            </div>
-            <div className="flex flex-col items-center text-center">
-              <div style={{width:'64px',height:'64px',display:'flex',alignItems:'center',justifyContent:'center'}} className="bg-coral/20 rounded-2xl mb-6">
-                <Users className="w-8 h-8 text-coral" />
-              </div>
-              <div className="text-coral font-bold text-sm mb-2">02</div>
-              <h3 className="text-xl font-bold mb-3">Find your people</h3>
-              <p className="text-white/50 max-w-xs">
-                See which families are already there or arriving soon. Connect before you even land. Your kids will have friends from day one.
-              </p>
-            </div>
-            <div className="flex flex-col items-center text-center">
-              <div style={{width:'64px',height:'64px',display:'flex',alignItems:'center',justifyContent:'center'}} className="bg-coral/20 rounded-2xl mb-6">
-                <Star className="w-8 h-8 text-coral" />
-              </div>
-              <div className="text-coral font-bold text-sm mb-2">03</div>
-              <h3 className="text-xl font-bold mb-3">Join & contribute</h3>
-              <p className="text-white/50 max-w-xs">
-                Leave reviews, share your experience, vouch for trusted options. The community grows stronger with every family.
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Operator CTA */}
-      <section className="bg-warm-gray py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center gap-8 shadow-sm border border-warm-gray-dark/30">
-            <div className="flex-1">
-              <h2 className="text-2xl md:text-3xl font-bold text-midnight mb-3">
+      {/* ─── OPERATOR CTA ─── */}
+      <section style={{ backgroundColor: '#F5F5F4', padding: '80px 0' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px' }}>
+          <div style={{
+            backgroundColor: 'white', borderRadius: '24px',
+            padding: '48px', border: '1px solid #e7e5e4',
+            display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '40px',
+          }}>
+            <div style={{ flex: 1, minWidth: '280px' }}>
+              <h2 style={{ fontSize: '28px', fontWeight: 800, color: '#1B1B1F', marginBottom: '12px', letterSpacing: '-0.5px' }}>
                 Run an alternative school or learning pod?
               </h2>
-              <p className="text-midnight/60 mb-6">
+              <p style={{ color: '#71717a', marginBottom: '24px', lineHeight: 1.6, fontSize: '15px' }}>
                 Claim your listing, reach families from around the world, and fill your spots with the right families. Free to claim — premium features coming soon.
               </p>
-              <button className="inline-flex items-center gap-2 px-6 py-3 bg-coral text-white font-semibold rounded-xl hover:bg-coral-dark transition-all">
+              <button style={{
+                display: 'inline-flex', alignItems: 'center', gap: '8px',
+                padding: '14px 28px', backgroundColor: '#FF4438', color: 'white',
+                fontWeight: 700, borderRadius: '14px', border: 'none', cursor: 'pointer', fontSize: '14px',
+              }}>
                 Claim your listing
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight size={16} />
               </button>
             </div>
-            <div className="flex items-center gap-4">
-              <div className="text-center px-6 py-4 bg-sand rounded-2xl">
-                <div className="text-2xl font-bold text-coral">{listings.length}+</div>
-                <div className="text-xs text-midnight/50">Listed options</div>
+            <div style={{ display: 'flex', gap: '16px' }}>
+              <div style={{ textAlign: 'center', padding: '20px 28px', backgroundColor: '#FFF8F5', borderRadius: '16px' }}>
+                <div style={{ fontSize: '28px', fontWeight: 800, color: '#FF4438' }}>{listings.length}+</div>
+                <div style={{ fontSize: '12px', color: '#a1a1aa', fontWeight: 500, marginTop: '4px' }}>Listed options</div>
               </div>
-              <div className="text-center px-6 py-4 bg-sand rounded-2xl">
-                <div className="text-2xl font-bold text-coral">{cities.reduce((s, c) => s + c.familiesHere, 0)}+</div>
-                <div className="text-xs text-midnight/50">Active families</div>
+              <div style={{ textAlign: 'center', padding: '20px 28px', backgroundColor: '#FFF8F5', borderRadius: '16px' }}>
+                <div style={{ fontSize: '28px', fontWeight: 800, color: '#FF4438' }}>{cities.reduce((s, c) => s + c.familiesHere, 0)}+</div>
+                <div style={{ fontSize: '12px', color: '#a1a1aa', fontWeight: 500, marginTop: '4px' }}>Active families</div>
               </div>
             </div>
           </div>
