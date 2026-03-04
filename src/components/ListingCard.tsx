@@ -1,8 +1,8 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import { Star, MapPin, CheckCircle } from 'lucide-react';
 import { Listing, categoryInfo } from '@/data/listings';
 import { getPlaceData } from '@/data/google-places';
+import SafeImage from './SafeImage';
 
 export default function ListingCard({ listing }: { listing: Listing }) {
   const catInfo = categoryInfo[listing.category];
@@ -25,8 +25,9 @@ export default function ListingCard({ listing }: { listing: Listing }) {
     >
       {/* Image */}
       <div style={{ position: 'relative', height: '220px', overflow: 'hidden' }}>
-        <Image
+        <SafeImage
           src={coverImage}
+          fallbackSrc={listing.coverImage}
           alt={listing.name}
           fill
           className="img-zoom"

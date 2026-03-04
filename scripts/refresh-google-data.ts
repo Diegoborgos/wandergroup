@@ -82,7 +82,7 @@ async function fetchPlaceDetails(placeId: string): Promise<CachedPlaceData | nul
   const url = `https://places.googleapis.com/v1/places/${placeId}`;
 
   try {
-    const res = await fetch(url, {
+    const res = await fetch(url + '?languageCode=en', {
       headers: {
         'X-Goog-Api-Key': API_KEY!,
         'X-Goog-FieldMask': FIELD_MASK,
@@ -99,10 +99,24 @@ async function fetchPlaceDetails(placeId: string): Promise<CachedPlaceData | nul
     // Extract photo URIs (New API returns photo resources with name field)
     const photos = (data.photos || []).slice(0, 10);
     const photoRefs = photos.map((p: { name: string }) => p.name);
-    const photoUrls = photoRefs.map(
-      (name: string) =>
-        `https://places.googleapis.com/v1/${name}/media?maxWidthPx=800&key=${API_KEY}`
-    );
+    // Resolve actual image URLs by requesting with skipHttpRedirect
+    const photoUrls: string[] = [];
+    for (const name of photoRefs) {
+      try {
+        const photoRes = await fetch(
+          `https://places.googleapis.com/v1/${name}/media?maxWidthPx=800&skipHttpRedirect=true&key=${API_KEY}`
+        );
+        const photoData = await photoRes.json();
+        if (photoData.photoUri) {
+          photoUrls.push(photoData.photoUri);
+        } else {
+          console.warn(`    ⚠ No photoUri in response for ${name}:`, JSON.stringify(photoData).slice(0, 200));
+        }
+      } catch (err) {
+        console.warn(`    ⚠ Photo fetch failed for ${name}:`, err);
+      }
+    }
+    console.log(`    Photos resolved: ${photoUrls.length}/${photoRefs.length}`);
 
     // Map reviews from new format to our cached format
     const reviews: CachedReview[] = (data.reviews || []).map((r: {

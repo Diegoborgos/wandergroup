@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import SafeImage from '@/components/SafeImage';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import {
@@ -33,6 +33,7 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
   const address = placeData?.address ?? listing.address;
   const phone = placeData?.phone ?? listing.phone;
   const website = placeData?.website ?? listing.website;
+  const description = placeData?.editorialSummary ?? listing.description;
 
   return (
     <>
@@ -50,8 +51,9 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
         <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px 24px' }}>
           <div className="grid grid-cols-1 md:grid-cols-3" style={{ gap: '8px', borderRadius: '20px', overflow: 'hidden' }}>
             <div className="md:col-span-2" style={{ position: 'relative', aspectRatio: '16/9' }}>
-              <Image
+              <SafeImage
                 src={photos[0]}
+                fallbackSrc={listing.images[0]}
                 alt={listing.name}
                 fill
                 style={{ objectFit: 'cover' }}
@@ -61,8 +63,9 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
             </div>
             <div className="hidden md:grid" style={{ display: 'grid', gridTemplateRows: '1fr 1fr', gap: '8px' }}>
               <div style={{ position: 'relative' }}>
-                <Image
+                <SafeImage
                   src={photos[1] || photos[0]}
+                  fallbackSrc={listing.images[1] || listing.images[0]}
                   alt={`${listing.name} 2`}
                   fill
                   style={{ objectFit: 'cover' }}
@@ -70,8 +73,9 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
                 />
               </div>
               <div style={{ position: 'relative' }}>
-                <Image
+                <SafeImage
                   src={photos[2] || photos[0]}
+                  fallbackSrc={listing.images[2] || listing.images[0]}
                   alt={`${listing.name} 3`}
                   fill
                   style={{ objectFit: 'cover' }}
@@ -135,7 +139,7 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
               {/* About */}
               <div style={{ marginBottom: '40px', paddingBottom: '32px', borderBottom: '1px solid #f4f4f5' }}>
                 <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#1B1B1F', marginBottom: '16px' }}>About</h2>
-                <p style={{ color: '#52525b', lineHeight: 1.7, fontSize: '15px' }}>{listing.description}</p>
+                <p style={{ color: '#52525b', lineHeight: 1.7, fontSize: '15px' }}>{description}</p>
               </div>
 
               {/* Highlights */}
