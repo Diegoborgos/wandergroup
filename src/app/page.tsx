@@ -9,7 +9,7 @@ import { cities, listings, familySignals, categoryInfo, type ListingCategory } f
 export default function Home() {
   const featuredListings = listings.filter(l => l.rating >= 4.8).slice(0, 6);
   const recentSignals = familySignals.slice(0, 4);
-  const topCategories: ListingCategory[] = ['forest-school', 'alternative-school', 'pod', 'community', 'experience', 'outdoor-activity'];
+  const topCategories: ListingCategory[] = ['forest-school', 'alternative-school', 'sports', 'arts-culture', 'stem', 'outdoor-activity'];
 
   return (
     <>
