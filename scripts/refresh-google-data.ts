@@ -11,8 +11,9 @@ import * as path from 'path';
 
 const API_KEY = process.env.GOOGLE_PLACES_API_KEY;
 if (!API_KEY) {
-  console.error('Missing GOOGLE_PLACES_API_KEY. Set it in .env.local or as an env var.');
-  process.exit(1);
+  console.log('No GOOGLE_PLACES_API_KEY set — skipping Google Places refresh.');
+  console.log('Set it as an environment variable to fetch live data.');
+  process.exit(0);
 }
 
 const FIELDS = [
