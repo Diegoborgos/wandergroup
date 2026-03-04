@@ -2,8 +2,7 @@
  * Refresh Google Places data for all listings.
  * Run with: npx tsx scripts/refresh-google-data.ts
  *
- * Fetches reviews, photos, ratings, hours, and contact info
- * from Google Places API and caches it locally.
+ * Uses the Places API (New) — https://developers.google.com/maps/documentation/places/web-service/op-overview
  */
 
 import * as fs from 'fs';
@@ -16,20 +15,20 @@ if (!API_KEY) {
   process.exit(0);
 }
 
-const FIELDS = [
-  'name',
+const FIELD_MASK = [
+  'displayName',
   'rating',
-  'user_ratings_total',
+  'userRatingCount',
   'reviews',
   'photos',
-  'editorial_summary',
-  'opening_hours',
-  'formatted_phone_number',
-  'website',
-  'formatted_address',
+  'editorialSummary',
+  'currentOpeningHours',
+  'nationalPhoneNumber',
+  'websiteUri',
+  'formattedAddress',
 ].join(',');
 
-interface GoogleReview {
+interface CachedReview {
   author_name: string;
   author_url?: string;
   profile_photo_url?: string;
@@ -39,18 +38,12 @@ interface GoogleReview {
   time: number;
 }
 
-interface GooglePhoto {
-  photo_reference: string;
-  height: number;
-  width: number;
-}
-
 interface CachedPlaceData {
   placeId: string;
   name: string;
   rating: number;
   reviewCount: number;
-  reviews: GoogleReview[];
+  reviews: CachedReview[];
   photoRefs: string[];
   photoUrls: string[];
   editorialSummary?: string;
@@ -86,48 +79,61 @@ function extractPlaceIds(): { slug: string; placeId: string }[] {
 }
 
 async function fetchPlaceDetails(placeId: string): Promise<CachedPlaceData | null> {
-  const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=${FIELDS}&key=${API_KEY}`;
+  const url = `https://places.googleapis.com/v1/places/${placeId}`;
 
   try {
-    const res = await fetch(url);
+    const res = await fetch(url, {
+      headers: {
+        'X-Goog-Api-Key': API_KEY!,
+        'X-Goog-FieldMask': FIELD_MASK,
+      },
+    });
+
     const data = await res.json();
 
-    if (data.status !== 'OK') {
-      console.warn(`  ⚠ API returned ${data.status} for ${placeId}: ${data.error_message || ''}`);
+    if (data.error) {
+      console.warn(`  ⚠ API error for ${placeId}: ${data.error.message || JSON.stringify(data.error)}`);
       return null;
     }
 
-    const result = data.result;
-    const photos: GooglePhoto[] = result.photos || [];
-
-    // Build photo URLs (proxied through Google — up to 10 photos)
-    const photoRefs = photos.slice(0, 10).map((p: GooglePhoto) => p.photo_reference);
+    // Extract photo URIs (New API returns photo resources with name field)
+    const photos = (data.photos || []).slice(0, 10);
+    const photoRefs = photos.map((p: { name: string }) => p.name);
     const photoUrls = photoRefs.map(
-      (ref: string) =>
-        `https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=${ref}&key=${API_KEY}`
+      (name: string) =>
+        `https://places.googleapis.com/v1/${name}/media?maxWidthPx=800&key=${API_KEY}`
     );
+
+    // Map reviews from new format to our cached format
+    const reviews: CachedReview[] = (data.reviews || []).map((r: {
+      authorAttribution?: { displayName?: string; uri?: string; photoUri?: string };
+      rating?: number;
+      relativePublishTimeDescription?: string;
+      text?: { text?: string };
+      publishTime?: string;
+    }) => ({
+      author_name: r.authorAttribution?.displayName || 'Anonymous',
+      author_url: r.authorAttribution?.uri,
+      profile_photo_url: r.authorAttribution?.photoUri,
+      rating: r.rating || 0,
+      relative_time_description: r.relativePublishTimeDescription || '',
+      text: r.text?.text || '',
+      time: r.publishTime ? Math.floor(new Date(r.publishTime).getTime() / 1000) : 0,
+    }));
 
     return {
       placeId,
-      name: result.name || '',
-      rating: result.rating || 0,
-      reviewCount: result.user_ratings_total || 0,
-      reviews: (result.reviews || []).map((r: GoogleReview) => ({
-        author_name: r.author_name,
-        author_url: r.author_url,
-        profile_photo_url: r.profile_photo_url,
-        rating: r.rating,
-        relative_time_description: r.relative_time_description,
-        text: r.text,
-        time: r.time,
-      })),
+      name: data.displayName?.text || '',
+      rating: data.rating || 0,
+      reviewCount: data.userRatingCount || 0,
+      reviews,
       photoRefs,
       photoUrls,
-      editorialSummary: result.editorial_summary?.overview,
-      openingHours: result.opening_hours?.weekday_text,
-      phone: result.formatted_phone_number,
-      website: result.website,
-      address: result.formatted_address,
+      editorialSummary: data.editorialSummary?.text,
+      openingHours: data.currentOpeningHours?.weekdayDescriptions,
+      phone: data.nationalPhoneNumber,
+      website: data.websiteUri,
+      address: data.formattedAddress,
       fetchedAt: new Date().toISOString(),
     };
   } catch (err) {
