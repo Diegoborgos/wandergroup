@@ -208,32 +208,40 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
               {/* Location */}
               <div>
                 <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#1B1B1F', marginBottom: '20px' }}>Location</h2>
-                <div style={{
-                  backgroundColor: '#F5F5F4', borderRadius: '20px', padding: '40px',
-                  textAlign: 'center',
-                }}>
+                <div style={{ borderRadius: '20px', overflow: 'hidden' }}>
+                  <iframe
+                    src={`https://www.google.com/maps?q=place_id:${listing.googlePlaceId}&output=embed`}
+                    width="100%"
+                    height="300"
+                    style={{ border: 0, display: 'block' }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title={`Map showing ${listing.name}`}
+                  />
                   <div style={{
-                    width: '56px', height: '56px', backgroundColor: '#FFF1F0', borderRadius: '16px',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px',
+                    backgroundColor: '#F5F5F4', padding: '16px 20px',
+                    display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px',
                   }}>
-                    <MapPin size={28} color="#FF4438" />
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <MapPin size={16} color="#FF4438" />
+                      <span style={{ fontSize: '14px', color: '#3f3f46', fontWeight: 500 }}>{address}</span>
+                    </div>
+                    <a
+                      href={listing.googleMapsUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        display: 'inline-flex', alignItems: 'center', gap: '6px',
+                        padding: '8px 16px', backgroundColor: 'white', color: '#FF4438',
+                        fontWeight: 600, fontSize: '13px', borderRadius: '10px', textDecoration: 'none',
+                        boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
+                      }}
+                    >
+                      <ExternalLink size={14} />
+                      Open in Google Maps
+                    </a>
                   </div>
-                  <p style={{ fontSize: '14px', color: '#3f3f46', fontWeight: 500, marginBottom: '4px' }}>{address}</p>
-                  <p style={{ fontSize: '12px', color: '#a1a1aa', marginBottom: '20px' }}>Place ID: {listing.googlePlaceId}</p>
-                  <a
-                    href={listing.googleMapsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      display: 'inline-flex', alignItems: 'center', gap: '8px',
-                      padding: '12px 24px', backgroundColor: 'white', color: '#FF4438',
-                      fontWeight: 600, fontSize: '14px', borderRadius: '14px', textDecoration: 'none',
-                      boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
-                    }}
-                  >
-                    <ExternalLink size={16} />
-                    Open in Google Maps
-                  </a>
                 </div>
               </div>
             </div>
