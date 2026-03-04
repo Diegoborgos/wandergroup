@@ -29,6 +29,10 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
   const placeData = getPlaceData(listing.googlePlaceId);
   const googleRating = placeData?.rating ?? listing.rating;
   const googleReviewCount = placeData?.reviewCount ?? listing.reviewCount;
+  const photos = placeData?.photoUrls?.length ? placeData.photoUrls : listing.images;
+  const address = placeData?.address ?? listing.address;
+  const phone = placeData?.phone ?? listing.phone;
+  const website = placeData?.website ?? listing.website;
 
   return (
     <>
@@ -47,7 +51,7 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
           <div className="grid grid-cols-1 md:grid-cols-3" style={{ gap: '8px', borderRadius: '20px', overflow: 'hidden' }}>
             <div className="md:col-span-2" style={{ position: 'relative', aspectRatio: '16/9' }}>
               <Image
-                src={listing.images[0]}
+                src={photos[0]}
                 alt={listing.name}
                 fill
                 style={{ objectFit: 'cover' }}
@@ -58,7 +62,7 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
             <div className="hidden md:grid" style={{ display: 'grid', gridTemplateRows: '1fr 1fr', gap: '8px' }}>
               <div style={{ position: 'relative' }}>
                 <Image
-                  src={listing.images[1] || listing.images[0]}
+                  src={photos[1] || photos[0]}
                   alt={`${listing.name} 2`}
                   fill
                   style={{ objectFit: 'cover' }}
@@ -67,7 +71,7 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
               </div>
               <div style={{ position: 'relative' }}>
                 <Image
-                  src={listing.images[2] || listing.images[0]}
+                  src={photos[2] || photos[0]}
                   alt={`${listing.name} 3`}
                   fill
                   style={{ objectFit: 'cover' }}
@@ -210,7 +214,7 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
                   }}>
                     <MapPin size={28} color="#FF4438" />
                   </div>
-                  <p style={{ fontSize: '14px', color: '#3f3f46', fontWeight: 500, marginBottom: '4px' }}>{listing.address}</p>
+                  <p style={{ fontSize: '14px', color: '#3f3f46', fontWeight: 500, marginBottom: '4px' }}>{address}</p>
                   <p style={{ fontSize: '12px', color: '#a1a1aa', marginBottom: '20px' }}>Place ID: {listing.googlePlaceId}</p>
                   <a
                     href={listing.googleMapsUrl}
@@ -322,12 +326,12 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
                 }}>
                   <h3 style={{ fontWeight: 700, color: '#1B1B1F', marginBottom: '16px', fontSize: '14px' }}>Contact</h3>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                    {listing.phone && (
-                      <a href={`tel:${listing.phone}`} style={{
+                    {phone && (
+                      <a href={`tel:${phone}`} style={{
                         display: 'flex', alignItems: 'center', gap: '12px', padding: '10px',
                         fontSize: '14px', color: '#52525b', textDecoration: 'none', borderRadius: '10px',
                       }}>
-                        <Phone size={16} /> {listing.phone}
+                        <Phone size={16} /> {phone}
                       </a>
                     )}
                     {listing.email && (
@@ -338,8 +342,8 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
                         <Mail size={16} /> {listing.email}
                       </a>
                     )}
-                    {listing.website && (
-                      <a href={listing.website} target="_blank" rel="noopener noreferrer" style={{
+                    {website && (
+                      <a href={website} target="_blank" rel="noopener noreferrer" style={{
                         display: 'flex', alignItems: 'center', gap: '12px', padding: '10px',
                         fontSize: '14px', color: '#52525b', textDecoration: 'none', borderRadius: '10px',
                       }}>

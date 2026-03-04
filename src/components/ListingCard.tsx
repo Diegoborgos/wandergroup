@@ -2,9 +2,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Star, MapPin, CheckCircle } from 'lucide-react';
 import { Listing, categoryInfo } from '@/data/listings';
+import { getPlaceData } from '@/data/google-places';
 
 export default function ListingCard({ listing }: { listing: Listing }) {
   const catInfo = categoryInfo[listing.category];
+  const placeData = getPlaceData(listing.googlePlaceId);
+  const coverImage = placeData?.photoUrls?.[0] ?? listing.coverImage;
+  const rating = placeData?.rating ?? listing.rating;
 
   return (
     <Link
@@ -22,7 +26,7 @@ export default function ListingCard({ listing }: { listing: Listing }) {
       {/* Image */}
       <div style={{ position: 'relative', height: '220px', overflow: 'hidden' }}>
         <Image
-          src={listing.coverImage}
+          src={coverImage}
           alt={listing.name}
           fill
           className="img-zoom"
@@ -82,7 +86,7 @@ export default function ListingCard({ listing }: { listing: Listing }) {
             flexShrink: 0,
           }}>
             <Star size={14} fill="#F59E0B" color="#F59E0B" />
-            <span style={{ fontSize: '13px', fontWeight: 700, color: '#1B1B1F' }}>{listing.rating}</span>
+            <span style={{ fontSize: '13px', fontWeight: 700, color: '#1B1B1F' }}>{rating}</span>
           </div>
         </div>
 
