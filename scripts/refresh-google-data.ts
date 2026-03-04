@@ -97,7 +97,8 @@ async function fetchPlaceDetails(placeId: string): Promise<CachedPlaceData | nul
     }
 
     // Extract photo URIs (New API returns photo resources with name field)
-    const photos = (data.photos || []).slice(0, 10);
+    // Only fetch 3 photos — that's the max we display
+    const photos = (data.photos || []).slice(0, 3);
     const photoRefs = photos.map((p: { name: string }) => p.name);
     // Resolve actual image URLs by requesting with skipHttpRedirect
     const photoUrls: string[] = [];
@@ -115,6 +116,8 @@ async function fetchPlaceDetails(placeId: string): Promise<CachedPlaceData | nul
       } catch (err) {
         console.warn(`    ⚠ Photo fetch failed for ${name}:`, err);
       }
+      // Delay between photo requests to avoid per-minute quota limits
+      await sleep(300);
     }
     console.log(`    Photos resolved: ${photoUrls.length}/${photoRefs.length}`);
 
@@ -192,8 +195,8 @@ async function main() {
       failed++;
     }
 
-    // Small delay to avoid hammering the API
-    await sleep(200);
+    // Delay between listings to stay within per-minute quota
+    await sleep(500);
   }
 
   cache.lastUpdated = new Date().toISOString();
