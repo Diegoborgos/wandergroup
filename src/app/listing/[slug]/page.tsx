@@ -210,7 +210,7 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
                 <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#1B1B1F', marginBottom: '20px' }}>Location</h2>
                 <div style={{ borderRadius: '20px', overflow: 'hidden' }}>
                   <iframe
-                    src={`https://www.google.com/maps?q=place_id:${listing.googlePlaceId}&output=embed`}
+                    src={`https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed`}
                     width="100%"
                     height="300"
                     style={{ border: 0, display: 'block' }}

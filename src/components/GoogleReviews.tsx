@@ -48,15 +48,27 @@ function ReviewCard({ review }: { review: GoogleReview }) {
         </div>
         <StarRating rating={review.rating} />
       </div>
-      {review.text && (
-        <p style={{
-          fontSize: '14px',
-          color: '#52525b',
-          lineHeight: 1.6,
-          margin: 0,
-        }}>
-          {review.text}
-        </p>
+      {(review.translatedText || review.text) && (
+        <div>
+          <p style={{
+            fontSize: '14px',
+            color: '#52525b',
+            lineHeight: 1.6,
+            margin: 0,
+          }}>
+            {review.translatedText || review.text}
+          </p>
+          {review.translatedText && (
+            <p style={{
+              fontSize: '12px',
+              color: '#a1a1aa',
+              fontStyle: 'italic',
+              margin: '8px 0 0',
+            }}>
+              Translated from original review
+            </p>
+          )}
+        </div>
       )}
     </div>
   );

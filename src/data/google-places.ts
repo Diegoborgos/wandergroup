@@ -7,6 +7,7 @@ export interface GoogleReview {
   rating: number;
   relative_time_description: string;
   text: string;
+  translatedText?: string;
   time: number;
 }
 
