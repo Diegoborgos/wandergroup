@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import {
   ArrowLeft, Star, MapPin, Globe, Phone, Mail,
-  CheckCircle, Users, ExternalLink, Heart, Share2, Calendar,
+  ExternalLink, Heart, Share2, Calendar,
 } from 'lucide-react';
 import FamilySignalCard from '@/components/FamilySignalCard';
 import GoogleReviews from '@/components/GoogleReviews';
@@ -35,21 +35,30 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
   const website = placeData?.website ?? listing.website;
   const description = placeData?.editorialSummary ?? listing.description;
 
+  const monoLabel = {
+    fontFamily: "'JetBrains Mono', monospace" as const,
+    fontSize: '10px' as const,
+    fontWeight: 500 as const,
+    textTransform: 'uppercase' as const,
+    letterSpacing: '0.08em',
+  };
+
   return (
     <>
       {/* Image Gallery */}
-      <section style={{ backgroundColor: 'white', paddingTop: '72px' }}>
-        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '24px 24px 0' }}>
+      <section style={{ backgroundColor: '#F5F0EB', paddingTop: '64px' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '24px 24px 0' }}>
           <Link href={`/city/${listing.citySlug}`} style={{
             display: 'inline-flex', alignItems: 'center', gap: '6px',
-            color: '#a1a1aa', fontSize: '14px', marginBottom: '16px', textDecoration: 'none',
+            ...monoLabel, color: '#999999',
+            marginBottom: '16px', textDecoration: 'none',
           }}>
-            <ArrowLeft size={16} />
+            <ArrowLeft size={14} />
             Back to {listing.city}
           </Link>
         </div>
-        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px 24px' }}>
-          <div className="grid grid-cols-1 md:grid-cols-3" style={{ gap: '8px', borderRadius: '20px', overflow: 'hidden' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 24px 24px' }}>
+          <div className="grid grid-cols-1 md:grid-cols-3" style={{ gap: '2px', overflow: 'hidden' }}>
             <div className="md:col-span-2" style={{ position: 'relative', aspectRatio: '16/9' }}>
               <SafeImage
                 src={photos[0]}
@@ -61,7 +70,7 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
                 sizes="(max-width: 768px) 100vw, 66vw"
               />
             </div>
-            <div className="hidden md:grid" style={{ display: 'grid', gridTemplateRows: '1fr 1fr', gap: '8px' }}>
+            <div className="hidden md:grid" style={{ display: 'grid', gridTemplateRows: '1fr 1fr', gap: '2px' }}>
               <div style={{ position: 'relative' }}>
                 <SafeImage
                   src={photos[1] || photos[0]}
@@ -88,92 +97,110 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
       </section>
 
       {/* Content */}
-      <section style={{ backgroundColor: 'white' }}>
-        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '32px 24px 64px' }}>
+      <section style={{ backgroundColor: '#F5F0EB' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '32px 24px 80px' }}>
           <div className="flex flex-col lg:flex-row" style={{ gap: '48px' }}>
             {/* Main Content */}
             <div style={{ flex: 1, minWidth: 0 }}>
               {/* Header badges */}
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '16px' }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '16px' }}>
                 <span style={{
-                  padding: '6px 14px', backgroundColor: '#F5F5F4', borderRadius: '20px',
-                  fontSize: '13px', fontWeight: 600, color: '#1B1B1F',
+                  padding: '6px 14px', border: '1px solid #D4CFC8',
+                  ...monoLabel, color: '#1A1A1A',
                 }}>
-                  {catInfo.icon} {catInfo.label}
+                  {catInfo.label}
                 </span>
                 {listing.verified && (
                   <span style={{
-                    display: 'flex', alignItems: 'center', gap: '4px',
-                    padding: '6px 12px', backgroundColor: '#F0FDF4', color: '#16A34A',
-                    borderRadius: '20px', fontSize: '12px', fontWeight: 600,
+                    padding: '6px 12px', backgroundColor: '#1A1A1A', color: '#BFFF00',
+                    ...monoLabel,
                   }}>
-                    <CheckCircle size={13} />
                     Verified
                   </span>
                 )}
                 {listing.claimedByOperator && (
                   <span style={{
-                    padding: '6px 12px', backgroundColor: '#EFF6FF', color: '#0EA5E9',
-                    borderRadius: '20px', fontSize: '12px', fontWeight: 600,
+                    padding: '6px 12px', border: '1px solid #D4CFC8',
+                    ...monoLabel, color: '#6B6B6B',
                   }}>
                     Claimed by operator
                   </span>
                 )}
               </div>
 
-              <h1 style={{ fontSize: 'clamp(24px, 4vw, 40px)', fontWeight: 800, color: '#1B1B1F', marginBottom: '16px', lineHeight: 1.15, letterSpacing: '-0.5px' }}>
+              <h1 style={{
+                fontFamily: "'DM Serif Display', Georgia, serif",
+                fontSize: 'clamp(24px, 4vw, 40px)',
+                fontWeight: 400, color: '#1A1A1A',
+                marginBottom: '16px', lineHeight: 1.15,
+              }}>
                 {listing.name}
               </h1>
 
-              <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '16px', marginBottom: '32px', fontSize: '14px', color: '#71717a' }}>
-                <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <Star size={16} fill="#F59E0B" color="#F59E0B" />
-                  <strong style={{ color: '#1B1B1F' }}>{googleRating}</strong> ({googleReviewCount} reviews)
+              <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
+                <span style={{ display: 'flex', alignItems: 'center', gap: '4px', ...monoLabel, color: '#1A1A1A', fontSize: '12px' }}>
+                  <Star size={14} fill="#BFFF00" color="#BFFF00" />
+                  {googleRating} ({googleReviewCount})
                 </span>
-                <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <MapPin size={16} />
+                <span style={{ display: 'flex', alignItems: 'center', gap: '4px', ...monoLabel, color: '#999999', fontSize: '11px' }}>
+                  <MapPin size={14} />
                   {listing.city}, {listing.country}
                 </span>
               </div>
 
               {/* About */}
-              <div style={{ marginBottom: '40px', paddingBottom: '32px', borderBottom: '1px solid #f4f4f5' }}>
-                <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#1B1B1F', marginBottom: '16px' }}>About</h2>
-                <p style={{ color: '#52525b', lineHeight: 1.7, fontSize: '15px' }}>{description}</p>
+              <div style={{ marginBottom: '40px', paddingBottom: '32px', borderBottom: '1px solid #D4CFC8' }}>
+                <h2 style={{
+                  fontFamily: "'DM Serif Display', Georgia, serif",
+                  fontSize: '22px', fontWeight: 400, color: '#1A1A1A', marginBottom: '16px',
+                }}>
+                  About
+                </h2>
+                <p style={{ color: '#6B6B6B', lineHeight: 1.7, fontSize: '15px' }}>{description}</p>
               </div>
 
               {/* Highlights */}
-              <div style={{ marginBottom: '40px', paddingBottom: '32px', borderBottom: '1px solid #f4f4f5' }}>
-                <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#1B1B1F', marginBottom: '20px' }}>Highlights</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: '12px' }}>
+              <div style={{ marginBottom: '40px', paddingBottom: '32px', borderBottom: '1px solid #D4CFC8' }}>
+                <h2 style={{
+                  fontFamily: "'DM Serif Display', Georgia, serif",
+                  fontSize: '22px', fontWeight: 400, color: '#1A1A1A', marginBottom: '20px',
+                }}>
+                  Highlights
+                </h2>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   {listing.highlights.map((h) => (
                     <div key={h} style={{
-                      display: 'flex', alignItems: 'flex-start', gap: '10px',
-                      backgroundColor: '#F5F5F4', borderRadius: '14px', padding: '14px 16px',
+                      display: 'flex', alignItems: 'flex-start', gap: '12px',
+                      padding: '8px 0',
                     }}>
-                      <CheckCircle size={16} color="#16A34A" style={{ marginTop: '2px', flexShrink: 0 }} />
-                      <span style={{ fontSize: '14px', color: '#3f3f46' }}>{h}</span>
+                      <span style={{ color: '#BFFF00', fontWeight: 700, fontSize: '12px', marginTop: '2px' }}>&mdash;</span>
+                      <span style={{ fontSize: '14px', color: '#6B6B6B' }}>{h}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* Pedagogy & Tags */}
-              <div style={{ marginBottom: '40px', paddingBottom: '32px', borderBottom: '1px solid #f4f4f5' }}>
-                <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#1B1B1F', marginBottom: '20px' }}>Pedagogy & Tags</h2>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+              <div style={{ marginBottom: '40px', paddingBottom: '32px', borderBottom: '1px solid #D4CFC8' }}>
+                <h2 style={{
+                  fontFamily: "'DM Serif Display', Georgia, serif",
+                  fontSize: '22px', fontWeight: 400, color: '#1A1A1A', marginBottom: '20px',
+                }}>
+                  Approach
+                </h2>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
                   {listing.pedagogy.map((p) => (
                     <span key={p} style={{
-                      padding: '6px 16px', backgroundColor: '#FFF1F0', color: '#FF4438',
-                      borderRadius: '20px', fontSize: '13px', fontWeight: 600,
+                      padding: '6px 16px', backgroundColor: '#1A1A1A', color: '#BFFF00',
+                      ...monoLabel,
                     }}>
                       {p}
                     </span>
                   ))}
                   {listing.tags.map((tag) => (
                     <span key={tag} style={{
-                      padding: '6px 16px', backgroundColor: '#F5F5F4',
-                      borderRadius: '20px', fontSize: '13px', fontWeight: 500, color: '#71717a',
+                      padding: '6px 16px', border: '1px solid #D4CFC8',
+                      ...monoLabel, color: '#6B6B6B',
                     }}>
                       {tag}
                     </span>
@@ -192,12 +219,14 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
 
               {/* Families */}
               {familySignals.length > 0 && (
-                <div style={{ marginBottom: '40px', paddingBottom: '32px', borderBottom: '1px solid #f4f4f5' }}>
-                  <h2 style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '20px', fontWeight: 700, color: '#1B1B1F', marginBottom: '20px' }}>
-                    <Users size={20} color="#16A34A" />
+                <div style={{ marginBottom: '40px', paddingBottom: '32px', borderBottom: '1px solid #D4CFC8' }}>
+                  <h2 style={{
+                    fontFamily: "'DM Serif Display', Georgia, serif",
+                    fontSize: '22px', fontWeight: 400, color: '#1A1A1A', marginBottom: '20px',
+                  }}>
                     Families in {listing.city}
                   </h2>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
                     {familySignals.map((signal) => (
                       <FamilySignalCard key={signal.id} signal={signal} />
                     ))}
@@ -207,8 +236,13 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
 
               {/* Location */}
               <div>
-                <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#1B1B1F', marginBottom: '20px' }}>Location</h2>
-                <div style={{ borderRadius: '20px', overflow: 'hidden' }}>
+                <h2 style={{
+                  fontFamily: "'DM Serif Display', Georgia, serif",
+                  fontSize: '22px', fontWeight: 400, color: '#1A1A1A', marginBottom: '20px',
+                }}>
+                  Location
+                </h2>
+                <div style={{ overflow: 'hidden' }}>
                   <iframe
                     src={`https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed`}
                     width="100%"
@@ -220,12 +254,13 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
                     title={`Map showing ${listing.name}`}
                   />
                   <div style={{
-                    backgroundColor: '#F5F5F4', padding: '16px 20px',
+                    backgroundColor: '#FAFAF8', padding: '16px 20px',
                     display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px',
+                    border: '1px solid #D4CFC8', borderTop: 'none',
                   }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <MapPin size={16} color="#FF4438" />
-                      <span style={{ fontSize: '14px', color: '#3f3f46', fontWeight: 500 }}>{address}</span>
+                      <MapPin size={14} color="#1A1A1A" />
+                      <span style={{ fontSize: '13px', color: '#6B6B6B', fontWeight: 500 }}>{address}</span>
                     </div>
                     <a
                       href={listing.googleMapsUrl}
@@ -233,13 +268,12 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
                       rel="noopener noreferrer"
                       style={{
                         display: 'inline-flex', alignItems: 'center', gap: '6px',
-                        padding: '8px 16px', backgroundColor: 'white', color: '#FF4438',
-                        fontWeight: 600, fontSize: '13px', borderRadius: '10px', textDecoration: 'none',
-                        boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
+                        padding: '8px 16px', backgroundColor: '#1A1A1A', color: '#BFFF00',
+                        ...monoLabel, textDecoration: 'none',
                       }}
                     >
-                      <ExternalLink size={14} />
-                      Open in Google Maps
+                      <ExternalLink size={12} />
+                      Google Maps
                     </a>
                   </div>
                 </div>
@@ -248,32 +282,42 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
 
             {/* Sidebar */}
             <div className="lg:w-[360px]" style={{ flexShrink: 0 }}>
-              <div style={{ position: 'sticky', top: '96px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div style={{ position: 'sticky', top: '88px', display: 'flex', flexDirection: 'column', gap: '2px' }}>
                 {/* Price Card */}
                 <div style={{
-                  backgroundColor: 'white', borderRadius: '20px', padding: '28px',
-                  border: '2px solid #e7e5e4', boxShadow: '0 4px 24px rgba(0,0,0,0.06)',
+                  backgroundColor: '#FAFAF8', padding: '28px',
+                  border: '1px solid #D4CFC8',
                 }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
                     <div>
-                      <div style={{ fontSize: '28px', fontWeight: 800, color: '#FF4438' }}>{listing.priceRange}</div>
+                      <div style={{
+                        fontFamily: "'JetBrains Mono', monospace",
+                        fontSize: '24px', fontWeight: 500, color: '#1A1A1A',
+                      }}>
+                        {listing.priceRange}
+                      </div>
                       {listing.priceNote && (
-                        <p style={{ fontSize: '12px', color: '#a1a1aa', marginTop: '4px' }}>{listing.priceNote}</p>
+                        <p style={{ ...monoLabel, color: '#999999', marginTop: '4px' }}>{listing.priceNote}</p>
                       )}
                     </div>
                     <div style={{
                       display: 'flex', alignItems: 'center', gap: '4px',
-                      backgroundColor: '#FEF3C7', padding: '6px 12px', borderRadius: '10px',
+                      backgroundColor: '#1A1A1A', padding: '6px 12px',
                     }}>
-                      <Star size={16} fill="#F59E0B" color="#F59E0B" />
-                      <span style={{ fontWeight: 700, color: '#1B1B1F', fontSize: '14px' }}>{googleRating}</span>
+                      <Star size={14} fill="#BFFF00" color="#BFFF00" />
+                      <span style={{
+                        fontFamily: "'JetBrains Mono', monospace",
+                        fontWeight: 500, color: '#BFFF00', fontSize: '13px',
+                      }}>
+                        {googleRating}
+                      </span>
                     </div>
                   </div>
 
                   {/* Quick Info */}
                   <div style={{
-                    backgroundColor: '#F5F5F4', borderRadius: '14px', padding: '16px',
-                    marginBottom: '24px',
+                    backgroundColor: '#F5F0EB', padding: '16px',
+                    marginBottom: '24px', border: '1px solid #D4CFC8',
                   }}>
                     {[
                       { label: 'Ages', value: `${listing.ageRange.min}–${listing.ageRange.max} years` },
@@ -288,13 +332,13 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
                     ].map((item, i) => (
                       <div key={item.label} style={{
                         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                        padding: '10px 0', fontSize: '14px',
-                        borderBottom: i < 4 ? '1px solid #e7e5e4' : 'none',
+                        padding: '10px 0', fontSize: '13px',
+                        borderBottom: i < 4 ? '1px solid #D4CFC8' : 'none',
                       }}>
-                        <span style={{ color: '#71717a' }}>{item.label}</span>
+                        <span style={{ ...monoLabel, color: '#999999' }}>{item.label}</span>
                         <span style={{
-                          fontWeight: 600,
-                          color: 'highlight' in item && item.highlight ? '#FF4438' : '#1B1B1F',
+                          fontWeight: 500, fontSize: '13px',
+                          color: 'highlight' in item && item.highlight ? '#BFFF00' : '#1A1A1A',
                           textAlign: 'right', maxWidth: '180px',
                         }}>
                           {item.value}
@@ -305,68 +349,74 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
 
                   {/* CTAs */}
                   <button style={{
-                    width: '100%', padding: '16px', backgroundColor: '#FF4438', color: 'white',
-                    fontWeight: 700, borderRadius: '14px', border: 'none', cursor: 'pointer',
-                    fontSize: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
-                    marginBottom: '12px',
+                    width: '100%', padding: '16px', backgroundColor: '#1A1A1A', color: '#BFFF00',
+                    fontFamily: "'JetBrains Mono', monospace",
+                    fontWeight: 500, border: 'none', cursor: 'pointer',
+                    fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.1em',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                    marginBottom: '8px',
                   }}>
-                    <Calendar size={18} />
+                    <Calendar size={16} />
                     Request Info
                   </button>
-                  <div style={{ display: 'flex', gap: '8px' }}>
+                  <div style={{ display: 'flex', gap: '2px' }}>
                     <button style={{
-                      flex: 1, padding: '12px', backgroundColor: '#F5F5F4', color: '#1B1B1F',
-                      fontWeight: 500, borderRadius: '14px', border: 'none', cursor: 'pointer',
-                      fontSize: '13px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
+                      flex: 1, padding: '12px', backgroundColor: '#F5F0EB', color: '#1A1A1A',
+                      fontFamily: "'JetBrains Mono', monospace",
+                      fontWeight: 400, border: '1px solid #D4CFC8', cursor: 'pointer',
+                      fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.05em',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
                     }}>
-                      <Heart size={15} /> Save
+                      <Heart size={13} /> Save
                     </button>
                     <button style={{
-                      flex: 1, padding: '12px', backgroundColor: '#F5F5F4', color: '#1B1B1F',
-                      fontWeight: 500, borderRadius: '14px', border: 'none', cursor: 'pointer',
-                      fontSize: '13px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
+                      flex: 1, padding: '12px', backgroundColor: '#F5F0EB', color: '#1A1A1A',
+                      fontFamily: "'JetBrains Mono', monospace",
+                      fontWeight: 400, border: '1px solid #D4CFC8', cursor: 'pointer',
+                      fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.05em',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
                     }}>
-                      <Share2 size={15} /> Share
+                      <Share2 size={13} /> Share
                     </button>
                   </div>
                 </div>
 
                 {/* Contact Card */}
                 <div style={{
-                  backgroundColor: 'white', borderRadius: '20px', padding: '24px',
-                  border: '1px solid #e7e5e4',
+                  backgroundColor: '#FAFAF8', padding: '24px',
+                  border: '1px solid #D4CFC8',
                 }}>
-                  <h3 style={{ fontWeight: 700, color: '#1B1B1F', marginBottom: '16px', fontSize: '14px' }}>Contact</h3>
+                  <h3 style={{ ...monoLabel, color: '#999999', marginBottom: '16px' }}>Contact</h3>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                     {phone && (
                       <a href={`tel:${phone}`} style={{
                         display: 'flex', alignItems: 'center', gap: '12px', padding: '10px',
-                        fontSize: '14px', color: '#52525b', textDecoration: 'none', borderRadius: '10px',
+                        fontSize: '13px', color: '#6B6B6B', textDecoration: 'none',
                       }}>
-                        <Phone size={16} /> {phone}
+                        <Phone size={14} /> {phone}
                       </a>
                     )}
                     {listing.email && (
                       <a href={`mailto:${listing.email}`} style={{
                         display: 'flex', alignItems: 'center', gap: '12px', padding: '10px',
-                        fontSize: '14px', color: '#52525b', textDecoration: 'none', borderRadius: '10px',
+                        fontSize: '13px', color: '#6B6B6B', textDecoration: 'none',
                       }}>
-                        <Mail size={16} /> {listing.email}
+                        <Mail size={14} /> {listing.email}
                       </a>
                     )}
                     {website && (
                       <a href={website} target="_blank" rel="noopener noreferrer" style={{
                         display: 'flex', alignItems: 'center', gap: '12px', padding: '10px',
-                        fontSize: '14px', color: '#52525b', textDecoration: 'none', borderRadius: '10px',
+                        fontSize: '13px', color: '#6B6B6B', textDecoration: 'none',
                       }}>
-                        <Globe size={16} /> Visit website
+                        <Globe size={14} /> Visit website
                       </a>
                     )}
                     <a href={listing.googleMapsUrl} target="_blank" rel="noopener noreferrer" style={{
                       display: 'flex', alignItems: 'center', gap: '12px', padding: '10px',
-                      fontSize: '14px', color: '#52525b', textDecoration: 'none', borderRadius: '10px',
+                      fontSize: '13px', color: '#6B6B6B', textDecoration: 'none',
                     }}>
-                      <MapPin size={16} /> Get directions
+                      <MapPin size={14} /> Get directions
                     </a>
                   </div>
                 </div>
@@ -374,18 +424,20 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
                 {/* Claim prompt */}
                 {!listing.claimedByOperator && (
                   <div style={{
-                    backgroundColor: '#FFFBEB', borderRadius: '20px', padding: '24px',
-                    border: '1px solid #FEF3C7',
+                    backgroundColor: '#FAFAF8', padding: '24px',
+                    border: '1px solid #D4CFC8',
                   }}>
-                    <h3 style={{ fontWeight: 700, color: '#1B1B1F', fontSize: '14px', marginBottom: '8px' }}>
+                    <h3 style={{ ...monoLabel, color: '#1A1A1A', marginBottom: '8px' }}>
                       Is this your listing?
                     </h3>
-                    <p style={{ fontSize: '13px', color: '#71717a', marginBottom: '16px', lineHeight: 1.5 }}>
+                    <p style={{ fontSize: '13px', color: '#6B6B6B', marginBottom: '16px', lineHeight: 1.5 }}>
                       Claim it to manage your profile, respond to inquiries, and get featured.
                     </p>
                     <button style={{
-                      width: '100%', padding: '12px', backgroundColor: '#1B1B1F', color: 'white',
-                      fontWeight: 600, borderRadius: '14px', border: 'none', cursor: 'pointer', fontSize: '13px',
+                      width: '100%', padding: '12px', backgroundColor: '#1A1A1A', color: '#BFFF00',
+                      fontFamily: "'JetBrains Mono', monospace",
+                      fontWeight: 500, border: 'none', cursor: 'pointer',
+                      fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.08em',
                     }}>
                       Claim this listing
                     </button>

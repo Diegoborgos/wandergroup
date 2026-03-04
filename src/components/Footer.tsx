@@ -1,38 +1,83 @@
 import Link from 'next/link';
-import { Heart } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer style={{ backgroundColor: '#1B1B1F', color: 'white' }}>
+    <footer style={{ backgroundColor: '#1A1A1A', color: '#FAFAF8' }}>
       {/* CTA Section */}
-      <div style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '80px 24px', textAlign: 'center' }}>
-          <h2 style={{ fontSize: 'clamp(28px, 4vw, 40px)', fontWeight: 800, marginBottom: '16px', letterSpacing: '-0.5px' }}>
-            Find your people, wherever you land.
-          </h2>
-          <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '17px', marginBottom: '32px', maxWidth: '560px', margin: '0 auto 32px', lineHeight: 1.6 }}>
-            Join the growing community of families building a different kind of childhood — globally connected, locally rooted.
-          </p>
-          <button style={{
-            display: 'inline-flex', alignItems: 'center', gap: '8px',
-            padding: '16px 32px', backgroundColor: '#FF4438', color: 'white',
-            fontWeight: 700, borderRadius: '14px', border: 'none', cursor: 'pointer', fontSize: '15px',
+      <div style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '120px 24px', textAlign: 'center' }}>
+          <p style={{
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: '11px',
+            textTransform: 'uppercase',
+            letterSpacing: '0.15em',
+            color: '#BFFF00',
+            marginBottom: '32px',
           }}>
-            <Heart size={18} />
-            Join the Community
-          </button>
+            The New Family
+          </p>
+          <h2 style={{
+            fontFamily: "'DM Serif Display', Georgia, serif",
+            fontSize: 'clamp(28px, 4vw, 48px)',
+            fontWeight: 400,
+            lineHeight: 1.15,
+            maxWidth: '720px',
+            margin: '0 auto 24px',
+          }}>
+            You already live in the future. Raise your kids there.
+          </h2>
+          <p style={{
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: '12px',
+            color: 'rgba(255,255,255,0.35)',
+            letterSpacing: '0.05em',
+            marginBottom: '48px',
+          }}>
+            The village that travels with you.
+          </p>
+          <Link
+            href="#"
+            style={{
+              display: 'inline-block',
+              padding: '16px 40px',
+              backgroundColor: '#BFFF00',
+              color: '#1A1A1A',
+              fontFamily: "'JetBrains Mono', monospace",
+              fontSize: '12px',
+              fontWeight: 500,
+              textTransform: 'uppercase',
+              letterSpacing: '0.1em',
+              textDecoration: 'none',
+            }}
+          >
+            Join
+          </Link>
         </div>
       </div>
 
       {/* Links */}
-      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '48px 24px' }}>
-        <div className="grid grid-cols-2 md:grid-cols-4" style={{ gap: '32px' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '64px 24px' }}>
+        <div className="grid grid-cols-2 md:grid-cols-3" style={{ gap: '48px' }}>
           <div>
-            <h3 style={{ fontWeight: 600, marginBottom: '16px', fontSize: '14px', color: 'rgba(255,255,255,0.8)' }}>Cities</h3>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              {['Lisbon', 'Ericeira', 'Sintra', 'Cascais'].map((city) => (
+            <h3 style={{
+              fontFamily: "'JetBrains Mono', monospace",
+              fontSize: '10px',
+              fontWeight: 500,
+              textTransform: 'uppercase',
+              letterSpacing: '0.15em',
+              color: 'rgba(255,255,255,0.3)',
+              marginBottom: '20px',
+            }}>
+              Cities
+            </h3>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {['Lisbon', 'Ericeira', 'Sintra', 'Cascais', 'Porto'].map((city) => (
                 <li key={city}>
-                  <Link href={`/city/${city.toLowerCase()}`} style={{ color: 'rgba(255,255,255,0.4)', fontSize: '13px', textDecoration: 'none' }}>
+                  <Link href={`/city/${city.toLowerCase()}`} style={{
+                    color: 'rgba(255,255,255,0.5)',
+                    fontSize: '14px',
+                    textDecoration: 'none',
+                  }}>
                     {city}
                   </Link>
                 </li>
@@ -40,31 +85,51 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <h3 style={{ fontWeight: 600, marginBottom: '16px', fontSize: '14px', color: 'rgba(255,255,255,0.8)' }}>Categories</h3>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              {['Forest Schools', 'Alternative Schools', 'Learning Pods', 'Communities'].map((cat) => (
-                <li key={cat}>
-                  <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '13px' }}>{cat}</span>
+            <h3 style={{
+              fontFamily: "'JetBrains Mono', monospace",
+              fontSize: '10px',
+              fontWeight: 500,
+              textTransform: 'uppercase',
+              letterSpacing: '0.15em',
+              color: 'rgba(255,255,255,0.3)',
+              marginBottom: '20px',
+            }}>
+              The Network
+            </h3>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {[
+                { label: 'The Directory', href: '/destinations' },
+                { label: 'List Your Space', href: '#' },
+                { label: 'Manifesto', href: '/manifesto' },
+              ].map((item) => (
+                <li key={item.label}>
+                  <Link href={item.href} style={{
+                    color: 'rgba(255,255,255,0.5)',
+                    fontSize: '14px',
+                    textDecoration: 'none',
+                  }}>
+                    {item.label}
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
           <div>
-            <h3 style={{ fontWeight: 600, marginBottom: '16px', fontSize: '14px', color: 'rgba(255,255,255,0.8)' }}>For Operators</h3>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              {['Claim Your Listing', 'Promote Your School', 'Partner With Us'].map((item) => (
+            <h3 style={{
+              fontFamily: "'JetBrains Mono', monospace",
+              fontSize: '10px',
+              fontWeight: 500,
+              textTransform: 'uppercase',
+              letterSpacing: '0.15em',
+              color: 'rgba(255,255,255,0.3)',
+              marginBottom: '20px',
+            }}>
+              Company
+            </h3>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {['Why This Exists', 'Contact'].map((item) => (
                 <li key={item}>
-                  <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '13px' }}>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h3 style={{ fontWeight: 600, marginBottom: '16px', fontSize: '14px', color: 'rgba(255,255,255,0.8)' }}>Company</h3>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              {['About', 'Blog', 'Contact'].map((item) => (
-                <li key={item}>
-                  <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '13px' }}>{item}</span>
+                  <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '14px' }}>{item}</span>
                 </li>
               ))}
             </ul>
@@ -72,21 +137,26 @@ export default function Footer() {
         </div>
 
         <div style={{
-          borderTop: '1px solid rgba(255,255,255,0.08)', marginTop: '48px', paddingTop: '32px',
+          borderTop: '1px solid rgba(255,255,255,0.06)', marginTop: '64px', paddingTop: '32px',
           display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '16px',
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <div style={{
-              width: '32px', height: '32px', backgroundColor: '#FF4438', borderRadius: '8px',
-              display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white',
-              fontWeight: 800, fontSize: '16px',
-            }}>
-              W
-            </div>
-            <span style={{ fontWeight: 700, fontSize: '15px' }}>wandergroup</span>
-          </div>
-          <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: '13px' }}>
-            For families who refused the default.
+          <span style={{
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: '11px',
+            fontWeight: 500,
+            letterSpacing: '0.12em',
+            textTransform: 'uppercase',
+            color: 'rgba(255,255,255,0.5)',
+          }}>
+            The New Family
+          </span>
+          <p style={{
+            fontFamily: "'JetBrains Mono', monospace",
+            color: 'rgba(255,255,255,0.25)',
+            fontSize: '11px',
+            letterSpacing: '0.05em',
+          }}>
+            A new upbringing.
           </p>
         </div>
       </div>

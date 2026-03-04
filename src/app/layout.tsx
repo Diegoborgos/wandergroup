@@ -4,9 +4,9 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "wandergroup — For families who refused the default",
+  title: "The New Family — The village that travels with you",
   description:
-    "Find alternative education, learning pods, forest schools, and like-minded families wherever you travel. The starting point for families who refused the default.",
+    "The village you choose for your child matters more than the school you send them to. Infrastructure for a new kind of childhood across Portugal.",
 };
 
 export default function RootLayout({

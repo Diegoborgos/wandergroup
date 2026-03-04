@@ -7,9 +7,9 @@ function StarRating({ rating }: { rating: number }) {
       {[1, 2, 3, 4, 5].map((star) => (
         <Star
           key={star}
-          size={14}
-          fill={star <= rating ? '#F59E0B' : '#e4e4e7'}
-          color={star <= rating ? '#F59E0B' : '#e4e4e7'}
+          size={13}
+          fill={star <= rating ? '#BFFF00' : '#D4CFC8'}
+          color={star <= rating ? '#BFFF00' : '#D4CFC8'}
         />
       ))}
     </div>
@@ -19,9 +19,8 @@ function StarRating({ rating }: { rating: number }) {
 function ReviewCard({ review }: { review: GoogleReview }) {
   return (
     <div style={{
-      backgroundColor: '#F5F5F4',
-      borderRadius: '16px',
-      padding: '20px',
+      padding: '20px 0',
+      borderBottom: '1px solid #D4CFC8',
     }}>
       <div style={{
         display: 'flex',
@@ -33,16 +32,19 @@ function ReviewCard({ review }: { review: GoogleReview }) {
           <img
             src={review.profile_photo_url}
             alt={review.author_name}
-            width={36}
-            height={36}
+            width={32}
+            height={32}
             style={{ borderRadius: '50%', objectFit: 'cover' }}
           />
         )}
         <div style={{ flex: 1 }}>
-          <div style={{ fontWeight: 600, fontSize: '14px', color: '#1B1B1F' }}>
+          <div style={{ fontWeight: 600, fontSize: '14px', color: '#1A1A1A' }}>
             {review.author_name}
           </div>
-          <div style={{ fontSize: '12px', color: '#a1a1aa' }}>
+          <div style={{
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: '11px', color: '#999999',
+          }}>
             {review.relative_time_description}
           </div>
         </div>
@@ -52,7 +54,7 @@ function ReviewCard({ review }: { review: GoogleReview }) {
         <div>
           <p style={{
             fontSize: '14px',
-            color: '#52525b',
+            color: '#6B6B6B',
             lineHeight: 1.6,
             margin: 0,
           }}>
@@ -60,12 +62,13 @@ function ReviewCard({ review }: { review: GoogleReview }) {
           </p>
           {review.translatedText && (
             <p style={{
-              fontSize: '12px',
-              color: '#a1a1aa',
+              fontFamily: "'JetBrains Mono', monospace",
+              fontSize: '10px',
+              color: '#999999',
               fontStyle: 'italic',
               margin: '8px 0 0',
             }}>
-              Translated from original review
+              Translated from original
             </p>
           )}
         </div>
@@ -86,7 +89,7 @@ export default function GoogleReviews({
   if (reviews.length === 0) return null;
 
   return (
-    <div style={{ marginBottom: '40px', paddingBottom: '32px', borderBottom: '1px solid #f4f4f5' }}>
+    <div style={{ marginBottom: '40px', paddingBottom: '32px', borderBottom: '1px solid #D4CFC8' }}>
       <div style={{
         display: 'flex',
         alignItems: 'center',
@@ -96,32 +99,37 @@ export default function GoogleReviews({
         <h2 style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '10px',
-          fontSize: '20px',
-          fontWeight: 700,
-          color: '#1B1B1F',
+          gap: '12px',
+          fontFamily: "'DM Serif Display', Georgia, serif",
+          fontSize: '22px',
+          fontWeight: 400,
+          color: '#1A1A1A',
           margin: 0,
         }}>
-          Google Reviews
+          Reviews
           <span style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: '4px',
-            backgroundColor: '#FEF3C7',
+            backgroundColor: '#1A1A1A',
             padding: '4px 10px',
-            borderRadius: '8px',
-            fontSize: '14px',
-            fontWeight: 700,
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: '12px',
+            fontWeight: 500,
+            color: '#BFFF00',
           }}>
-            <Star size={14} fill="#F59E0B" color="#F59E0B" />
+            <Star size={12} fill="#BFFF00" color="#BFFF00" />
             {rating}
           </span>
         </h2>
-        <span style={{ fontSize: '13px', color: '#a1a1aa' }}>
-          {reviewCount} total reviews
+        <span style={{
+          fontFamily: "'JetBrains Mono', monospace",
+          fontSize: '11px', color: '#999999',
+        }}>
+          {reviewCount} total
         </span>
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+      <div>
         {reviews.map((review, i) => (
           <ReviewCard key={`${review.author_name}-${i}`} review={review} />
         ))}

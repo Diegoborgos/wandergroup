@@ -75,14 +75,14 @@ export interface FamilySignal {
 }
 
 export const categoryInfo: Record<ListingCategory, { label: string; icon: string; description: string }> = {
-  'forest-school': { label: 'Forest & Nature Schools', icon: '🌲', description: 'Outdoor, nature-immersive learning rooted in Scandinavian forest pedagogy.' },
-  'alternative-school': { label: 'Alternative Schools', icon: '🏫', description: 'Montessori, Waldorf, international and other alternative education approaches.' },
-  'coworking': { label: 'Coworking Spaces', icon: '💻', description: 'Family-friendly coworking spaces for remote-working parents.' },
-  'sports': { label: 'Sports & Martial Arts', icon: '🥋', description: 'Martial arts, surf schools, climbing, swimming, horse riding and more.' },
-  'outdoor-activity': { label: 'Outdoor Adventures', icon: '🏔️', description: 'Nature parks, farms, kayaking, hiking, and outdoor exploration.' },
-  'arts-culture': { label: 'Arts & Culture', icon: '🎨', description: 'Art workshops, ceramics, theatre, music, dance, photography, and cooking.' },
-  'stem': { label: 'Science & Tech', icon: '🔬', description: 'Coding schools, STEAM labs, science museums, aquariums, and maker spaces.' },
-  'community': { label: 'Community & Social', icon: '👨‍👩‍👧‍👦', description: 'Libraries, play spaces, language groups, scouting, chess clubs, and online communities.' },
+  'forest-school': { label: 'Forest & Nature', icon: '', description: 'Outdoor, nature-immersive learning.' },
+  'alternative-school': { label: 'Alternative Schools', icon: '', description: 'Montessori, Waldorf, international.' },
+  'coworking': { label: 'Coworking', icon: '', description: 'Family-friendly workspaces.' },
+  'sports': { label: 'Sports', icon: '', description: 'Martial arts, surf, climbing, swimming.' },
+  'outdoor-activity': { label: 'Outdoor', icon: '', description: 'Nature parks, farms, hiking.' },
+  'arts-culture': { label: 'Arts & Culture', icon: '', description: 'Art, ceramics, theatre, music, dance.' },
+  'stem': { label: 'Science & Tech', icon: '', description: 'Coding, STEAM labs, maker spaces.' },
+  'community': { label: 'Community', icon: '', description: 'Libraries, language groups, social.' },
 };
 
 export const cities: City[] = [
