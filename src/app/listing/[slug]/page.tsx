@@ -6,12 +6,14 @@ import {
   CheckCircle, Users, ExternalLink, Heart, Share2, Calendar,
 } from 'lucide-react';
 import FamilySignalCard from '@/components/FamilySignalCard';
+import GoogleReviews from '@/components/GoogleReviews';
 import {
   getListingBySlug,
   listings,
   categoryInfo,
   getFamilySignalsByCity,
 } from '@/data/listings';
+import { getPlaceData } from '@/data/google-places';
 
 export function generateStaticParams() {
   return listings.map((l) => ({ slug: l.slug }));
@@ -24,6 +26,9 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
 
   const catInfo = categoryInfo[listing.category];
   const familySignals = getFamilySignalsByCity(listing.city).slice(0, 2);
+  const placeData = getPlaceData(listing.googlePlaceId);
+  const googleRating = placeData?.rating ?? listing.rating;
+  const googleReviewCount = placeData?.reviewCount ?? listing.reviewCount;
 
   return (
     <>
@@ -115,7 +120,7 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
               <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '16px', marginBottom: '32px', fontSize: '14px', color: '#71717a' }}>
                 <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <Star size={16} fill="#F59E0B" color="#F59E0B" />
-                  <strong style={{ color: '#1B1B1F' }}>{listing.rating}</strong> ({listing.reviewCount} reviews)
+                  <strong style={{ color: '#1B1B1F' }}>{googleRating}</strong> ({googleReviewCount} reviews)
                 </span>
                 <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <MapPin size={16} />
@@ -167,6 +172,15 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
                   ))}
                 </div>
               </div>
+
+              {/* Google Reviews */}
+              {placeData && placeData.reviews.length > 0 && (
+                <GoogleReviews
+                  reviews={placeData.reviews}
+                  rating={googleRating}
+                  reviewCount={googleReviewCount}
+                />
+              )}
 
               {/* Families */}
               {familySignals.length > 0 && (
@@ -236,7 +250,7 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
                       backgroundColor: '#FEF3C7', padding: '6px 12px', borderRadius: '10px',
                     }}>
                       <Star size={16} fill="#F59E0B" color="#F59E0B" />
-                      <span style={{ fontWeight: 700, color: '#1B1B1F', fontSize: '14px' }}>{listing.rating}</span>
+                      <span style={{ fontWeight: 700, color: '#1B1B1F', fontSize: '14px' }}>{googleRating}</span>
                     </div>
                   </div>
 
